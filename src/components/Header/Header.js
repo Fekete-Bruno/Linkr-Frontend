@@ -5,10 +5,13 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef, useContext } from "react";
 import UserContext from "../../Contexts/UserContext"
 import { HiUserCircle } from "react-icons/hi";
+import { SlArrowDown } from "react-icons/sl";
+import { SlArrowUp } from "react-icons/sl";
 
 export default function Header() {
   const img = localStorage.getItem("img");
   const [open, setOpen] = useState(false);
+  const [arrow, setArrow] = useState(<SlArrowDown />);
   const navigate = useNavigate();
   const context = useContext(UserContext);
   let menuRef = useRef();
@@ -16,6 +19,7 @@ export default function Header() {
   useEffect(() => {
     let handler = (e) => {
       if (!menuRef.current.contains(e.target)) {
+        setArrow(<SlArrowDown />);
         setOpen(false);
       }
     }
@@ -65,21 +69,29 @@ export default function Header() {
     });
   }
 
+  function toggleArrow() {
+    if (open) {
+      setArrow(<SlArrowDown />);
+    } if (!open) {
+      setArrow(<SlArrowUp />);
+    }
+  }
+
   return (
     <Wraped>
       <div>
         <h1>Linkr</h1>
         {/* <img src="" alt=".." /> */}
         <Dropdown ref={menuRef}>
-          <DropdownTrigger onClick={() => { setOpen(!open) }}>
-            {img === 'null' ? <ContainerHiUserCircle><HiUserCircle /></ContainerHiUserCircle> : <img src={img} alt="" />}
+          <DropdownTrigger onClick={() => { setOpen(!open); toggleArrow(); }}>
+            {img === 'null' ? <ContainerHiUserCircle>{arrow}<HiUserCircle /></ContainerHiUserCircle> : <>{arrow}<img src={img} alt="" /></>}
           </DropdownTrigger>
 
           <div className={`dropdown-menu ${open ? 'active' : 'inactive'}`}>
             <nav>
               <ul>
-                <li onClick={() => { SignOut() }}>SignOut</li>
-                <li onClick={() => { SignOutAll() }}>SignOut All</li>
+                <li onClick={() => { SignOut(); setOpen(!open); toggleArrow(); }}>SignOut</li>
+                <li onClick={() => { SignOutAll(); setOpen(!open); toggleArrow(); }}>SignOut All</li>
               </ul>
             </nav>
           </div>
@@ -122,6 +134,7 @@ const Wraped = styled.header`
     font-size: 32px;
     width: 53px;
     height: 53px;
+    margin-left: 12px;
   }
 `;
 

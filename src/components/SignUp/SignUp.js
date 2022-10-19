@@ -3,7 +3,6 @@ import { useNavigate, Link } from "react-router-dom";
 import { useState, useContext } from "react";
 import UserContext from "../../Contexts/UserContext";
 import styled from "styled-components";
-import Button from "../Buttons/Buttons";
 import Input from "../Inputs/Input.js";
 
 export default function SignUp() {
@@ -11,18 +10,24 @@ export default function SignUp() {
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
     const [img, setImg] = useState(null);
+    const [disabled, setDisabled] = useState(false);
     const context = useContext(UserContext);
     const navigate = useNavigate();
 
     function handleForm(e) {
         e.preventDefault();
 
+        setDisabled(true);
+
         if (email === '') {
             alert('E-mail cannot be empty');
+            setDisabled(false);
         } else if (password === '') {
             alert('Password cannot be empty');
+            setDisabled(false);
         } else if (name === '') {
             alert('Username cannot be empty');
+            setDisabled(false);
         } else {
             const object = {
                 email,
@@ -42,12 +47,12 @@ export default function SignUp() {
 
             post.catch((error) => {
                 console.log(error);
+                setDisabled(false);
                 if (error.response.data === 'This e-mail already exists') {
                     alert('This e-mail already exists');
                 } else {
                     alert('All fields must be filled correctly');
                 }
-
             });
         }
     }
@@ -67,7 +72,7 @@ export default function SignUp() {
                     <Input className="log" type="text" id="username" placeholder="Username" value={name} onChange={(e) => { setName(e.target.value) }} required></Input>
                     <Input className="log" type="text" id="img" placeholder="Picture url" value={img} onChange={(e) => { setImg(e.target.value) }}></Input>
 
-                    <Button className="log">Sign Up</Button>
+                    <button className="log" disabled={disabled}>Sign Up</button>
                     <Link to={'/'}><h1>Switch back to log in</h1></Link>
                 </Form>
             </ContainerForm>
@@ -130,5 +135,21 @@ const ContainerForm = styled.div`
 `;
 
 const Form = styled.form`
-    
+    button {
+        width: 429px;
+        height: 65px;
+        left: 956px;
+        top: 473px;
+        background: #1877F2;
+        border-radius: 6px;
+        border: none;
+
+        font-family: 'Oswald';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 27px;
+        line-height: 40px;
+        color: #FFFFFF;
+        //color: ${props => props.disabled ? `#000000` : `#FFFFFF`}
+    }
 `;

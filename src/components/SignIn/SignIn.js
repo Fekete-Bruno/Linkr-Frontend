@@ -3,12 +3,12 @@ import { useNavigate, Link } from "react-router-dom";
 import { useState, useContext } from "react";
 import UserContext from "../../Contexts/UserContext"
 import styled from "styled-components";
-import Button from "../Buttons/Buttons";
 import Input from "../Inputs/Input.js";
 
 export default function SignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [disabled, setDisabled] = useState(false);
     const navigate = useNavigate();
     const context = useContext(UserContext);
     localStorage.removeItem("token");
@@ -17,10 +17,14 @@ export default function SignIn() {
     function handleForm(e) {
         e.preventDefault();
 
+        setDisabled(true);
+
         if (email === '') {
             alert('Enter your e-mail');
+            setDisabled(false);
         } else if (password === '') {
             alert('Enter your password');
+            setDisabled(false);
         } else {
             const body = {
                 email,
@@ -36,6 +40,7 @@ export default function SignIn() {
             });
 
             post.catch((error) => {
+                setDisabled(false);
                 alert('Erro! E-mail ou senha inválidos/inexistentes');
             });
         }
@@ -54,7 +59,7 @@ export default function SignIn() {
                     <Input className="log" type="email" id="email" placeholder="E-mail" value={email} onChange={(e) => { setEmail(e.target.value) }} required></Input>
                     <Input className="log" type="password" id="password" placeholder="Password" value={password} onChange={(e) => { setPassword(e.target.value) }} required></Input>
 
-                    <Button className="log">Log In</Button>
+                    <button className="log" disabled={disabled}>Log In</button>
                     <Link to={'/signup'}><h1>First time? Create an account!</h1></Link>
                 </Form>
             </ContainerForm>
@@ -117,5 +122,21 @@ const ContainerForm = styled.div`
 `;
 
 const Form = styled.form`
-    
+    button {
+        width: 429px;
+        height: 65px;
+        left: 956px;
+        top: 473px;
+        background: #1877F2;
+        border-radius: 6px;
+        border: none;
+
+        font-family: 'Oswald';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 27px;
+        line-height: 40px;
+        color: #FFFFFF;
+        //color: ${props => props.disabled ? `#000000` : `#FFFFFF`}
+    }
 `;
