@@ -6,7 +6,7 @@ import SignIn from "../SignIn/SignIn";
 import Logged from "../Logged/Logged";
 
 export default function App() {
-    const BASE_URL = 'http://localhost:4000';
+    const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
     return (
         <>
