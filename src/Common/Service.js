@@ -4,7 +4,7 @@ const BASE_URL = "http://localhost:5000";
 
 function createHeaders() {
 
-    const auth = JSON.parse(localStorage.getItem("linkr"));
+    const auth = JSON.parse(localStorage.getItem("token"));
     const config = {
       headers: {
         Authorization: `Bearer ${auth.token}`
