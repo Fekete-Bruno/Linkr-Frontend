@@ -8,8 +8,9 @@ import Logged from "../Logged/Logged";
 import UserProfile from "../UserProfile/Profile";
 
 export default function App() {
-    const BASE_URL = 'http://localhost:5000';
 
+    const BASE_URL = 'http://localhost:5000';
+    
     return (
         <>
             <UserContext.Provider value={{ BASE_URL }}>
