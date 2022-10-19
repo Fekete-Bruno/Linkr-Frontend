@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Header from "./components/Header/Header.js";
+import Header from "../Header/Header";
 
 export default function Logged() {
     return (
