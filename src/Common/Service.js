@@ -40,4 +40,10 @@ function postUrls(body){
   return request;
 }
 
-export { createHeaders, getUser, getUsers, searchUser, postUrls };
+function getPosts(){
+  const config = createHeaders();
+  const request = axios.get(`${BASE_URL}/timeline`,config);
+  return request;
+}
+
+export { createHeaders, getUser, getUsers, searchUser, postUrls, getPosts };
