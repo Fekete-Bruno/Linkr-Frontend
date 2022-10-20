@@ -10,7 +10,7 @@ import UserProfile from "../UserProfile/Profile";
 export default function App() {
 
     const BASE_URL = 'http://localhost:5000';
-    
+
     return (
         <>
             <UserContext.Provider value={{ BASE_URL }}>
@@ -19,16 +19,16 @@ export default function App() {
                     <Routes>
                         <Route path="/" element={<SignIn />} />
                         <Route path="/signup" element={<SignUp />} />
-                        <Route 
-                            path="/logged" 
+                        <Route
+                            path="/logged"
                             element={
                                 <PrivatePage>
                                     <Logged />
                                 </PrivatePage>
                             }
                         />
-                        <Route 
-                            path="/user/:id" 
+                        <Route
+                            path="/user/:id"
                             element={
                                 <PrivatePage>
                                     <UserProfile />
