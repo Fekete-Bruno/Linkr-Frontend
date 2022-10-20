@@ -28,7 +28,9 @@ export default function Header() {
   }, []);
 
   function SignOut() {
-    const token = localStorage.getItem("token");
+    let token = localStorage.getItem("token");
+    token = JSON.parse(token);
+    token = token.token;
     const config = {
       headers: {
         Authorization: `Bearer ${token}`
@@ -49,7 +51,9 @@ export default function Header() {
   }
 
   function SignOutAll() {
-    const token = localStorage.getItem("token");
+    let token = localStorage.getItem("token");
+    token = JSON.parse(token);
+    token = token.token;
     const config = {
       headers: {
         Authorization: `Bearer ${token}`
@@ -84,7 +88,7 @@ export default function Header() {
         {/* <img src="" alt=".." /> */}
         <Dropdown ref={menuRef}>
           <DropdownTrigger onClick={() => { setOpen(!open); toggleArrow(); }}>
-            {img === 'null' ? <ContainerHiUserCircle>{arrow}<HiUserCircle /></ContainerHiUserCircle> : <>{arrow}<img src={img} alt="" /></>}
+            {img === 'null' ? <>{arrow}<ContainerHiUserCircle><HiUserCircle /></ContainerHiUserCircle></> : <>{arrow}<img src={img} alt="" /></>}
           </DropdownTrigger>
 
           <div className={`dropdown-menu ${open ? 'active' : 'inactive'}`}>
@@ -141,6 +145,7 @@ const Wraped = styled.header`
 const ContainerHiUserCircle = styled(HiUserCircle)`
   transform: scale(3);
   margin-right: 24px;
+  margin-left: 20px;
 `;
 
 const Dropdown = styled.div`

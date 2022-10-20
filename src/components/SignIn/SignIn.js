@@ -34,7 +34,7 @@ export default function SignIn() {
             const post = axios.post(context.BASE_URL + '/signin', body);
 
             post.then((answer) => {
-                localStorage.setItem("token", answer.data.token);
+                localStorage.setItem("token", JSON.stringify({ token: answer.data.token }));
                 localStorage.setItem("img", answer.data.img);
                 navigate('/logged');
             });
