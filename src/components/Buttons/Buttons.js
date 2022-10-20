@@ -22,6 +22,9 @@ export default function Button({
 
 const Wraped = styled.button`
   background-color: #1877f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #ffffff;
   text-align: center;
   margin: 3px;
@@ -67,6 +70,15 @@ const Wraped = styled.button`
     font-size: 18px;
     line-height: 22px;
     border-radius: 5px;
+  }
+
+  &:hover{
+    cursor: pointer;
+    opacity: 0.9;
+  }
+
+  &:active{
+    transform: translateY(3px);
   }
 
   @media (max-width: 400px) {
