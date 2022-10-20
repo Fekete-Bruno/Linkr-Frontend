@@ -7,6 +7,7 @@ import SignUp from "../SignUp/SignUp.js";
 import SignIn from "../SignIn/SignIn";
 import UserProfile from "../UserProfile/Profile";
 import Timeline from "../Timeline/Timeline";
+import HashtagPage from "../HashtagPage/HashtagPage";
 
 export default function App() {
     
@@ -42,6 +43,14 @@ export default function App() {
                             element={
                                 <PrivatePage>
                                     <UserProfile />
+                                </PrivatePage>
+                            }
+                        />
+                        <Route
+                            path="/hashtag/:hashtag"
+                            element={
+                                <PrivatePage>
+                                    <HashtagPage />
                                 </PrivatePage>
                             }
                         />

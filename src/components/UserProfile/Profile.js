@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 import { getUser } from "../../Common/Service";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from 'react-router-dom';
