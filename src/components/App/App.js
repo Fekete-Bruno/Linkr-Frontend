@@ -17,7 +17,7 @@ export default function App() {
     
     return (
         <>
-            <UserContext.Provider value={{ BASE_URL: process.env.REACT_APP_BASE_URL }}>
+            <UserContext.Provider value={{ BASE_URL }}>
                 <GlobalStyle />
                 <BrowserRouter>
                     <Routes>
