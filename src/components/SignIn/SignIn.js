@@ -71,6 +71,13 @@ const Page = styled.div`
     display: flex;
     margin-top: -80px;
     height: 100vh;
+
+    @media (max-width: 600px) {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        //margin-left: -50px;
+    }
 `;
 
 const SideBar = styled.div`
@@ -101,6 +108,27 @@ const SideBar = styled.div`
         color: #FFFFFF;
         margin-left: 144px;
     }
+
+    @media (max-width: 600px) {
+        justify-content: center;
+        align-items: center;
+        height: 200px;
+        width: 100%;
+
+        h1 {
+            font-size: 76px;
+            margin: 0px;
+            line-height: 100%;
+            letter-spacing: 0.0em;
+        }
+
+        h2 {
+            font-size: 23px;
+            margin: 0px;
+            line-height: 120%;
+            letter-spacing: 0.0em;
+        }
+    }
 `;
 
 const ContainerForm = styled.div`
@@ -119,6 +147,10 @@ const ContainerForm = styled.div`
             color: #FFFFFF;
             margin-top: 14px;
         }
+
+    @media (max-width: 600px) {
+        margin-top: 24px;
+    }
 `;
 
 const Form = styled.form`
