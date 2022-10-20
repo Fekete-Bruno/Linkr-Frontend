@@ -40,4 +40,4 @@ function postUrls(body){
   return request;
 }
 
-export { createHeaders, getUser, getUsers, searchUser, ṕostUrls };
+export { createHeaders, getUser, getUsers, searchUser, postUrls };
