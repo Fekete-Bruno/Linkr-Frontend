@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import PostForm from "../PostForm/PostForm";
+import PostContainer from "../PostsContainer/PostsContainer";
 
 export default function Timeline(){
     return(
@@ -10,9 +11,7 @@ export default function Timeline(){
 
                 <div>
                 <PostForm />
-                <div>
-                    POSTS HERE SOON...
-                </div>
+                <PostContainer />
                 </div>
 
 

@@ -2,10 +2,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import GlobalStyle from "../../Styles/GlobalStyles";
 import UserContext from "../../Contexts/UserContext";
 import PrivatePage from "../../Common/PrivatePage";
+import PageNotFound from "../404Page/PageNotFound";
 import SignUp from "../SignUp/SignUp.js";
 import SignIn from "../SignIn/SignIn";
 import UserProfile from "../UserProfile/Profile";
 import Timeline from "../Timeline/Timeline";
+import HashtagPage from "../HashtagPage/HashtagPage";
 
 export default function App() {
     
@@ -23,8 +25,13 @@ export default function App() {
                         <Route path="/" element={<SignIn />} />
                         <Route path="/signup" element={<SignUp />} />
 
-                        <Route 
-                            path="/timeline" 
+                        <Route path="/404" 
+                            element={
+                                <PrivatePage>
+                                    <PageNotFound  />
+                                </PrivatePage>
+                            }/>
+                            <Route path="/timeline" 
                             element={
                                 <PrivatePage>
                                     <Timeline />
@@ -36,6 +43,14 @@ export default function App() {
                             element={
                                 <PrivatePage>
                                     <UserProfile />
+                                </PrivatePage>
+                            }
+                        />
+                        <Route
+                            path="/hashtag/:hashtag"
+                            element={
+                                <PrivatePage>
+                                    <HashtagPage />
                                 </PrivatePage>
                             }
                         />

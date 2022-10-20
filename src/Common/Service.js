@@ -22,12 +22,28 @@ function getUser (id) {
     return request;
 };
 
+function getUsers() {
+    const config = createHeaders()
+    const request = axios.get(`${BASE_URL}/users`, config);
+    return request;
+};
+
+function searchUser(query) {
+    const config = createHeaders()
+    const request = axios.get(`${BASE_URL}/users?keyword=${query}`, config);
+    return request;
+};
+
 function postUrls(body){
   const config = createHeaders();
   const request = axios.post(`${BASE_URL}/post`,body,config);
   return request;
 }
 
-export { createHeaders, getUser, postUrls };
+function getPosts(){
+  const config = createHeaders();
+  const request = axios.get(`${BASE_URL}/timeline`,config);
+  return request;
+}
 
-  
+export { createHeaders, getUser, getUsers, searchUser, postUrls, getPosts };
