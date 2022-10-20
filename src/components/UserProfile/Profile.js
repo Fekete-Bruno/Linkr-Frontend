@@ -30,7 +30,7 @@ export default function UserProfile () {
             navigate("/404");
         });
 
-    }, [setUser]);
+    }, [params.id]);
 
     return (
         <> 

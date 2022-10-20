@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef, useContext } from "react";
 import UserContext from "../../Contexts/UserContext"
 import { HiUserCircle } from "react-icons/hi";
-import { SlArrowDown } from "react-icons/sl";
-import { SlArrowUp } from "react-icons/sl";
+import { SlArrowDown, SlArrowUp  } from "react-icons/sl";
+import SearchBar from "../SearchBar/Search";
 
 export default function Header() {
   const img = localStorage.getItem("img");
@@ -81,7 +81,9 @@ export default function Header() {
     <Wraped>
       <div>
         <h1 onClick={() => navigate('/logged')}>Linkr</h1>
-        {/* <img src="" alt=".." /> */}
+        
+        <SearchBar/>
+
         <Dropdown ref={menuRef}>
           <DropdownTrigger onClick={() => { setOpen(!open); toggleArrow(); }}>
             {img === 'null' ? <ContainerHiUserCircle>{arrow}<HiUserCircle /></ContainerHiUserCircle> : <>{arrow}<img src={img} alt="" /></>}
@@ -120,16 +122,12 @@ const Wraped = styled.header`
     letter-spacing: 0.05em;
     padding: 10px 28px;
     cursor: pointer;
-
-    :active {
-            transform: scale(0.98);
-            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
-        }
+  }
+  >div{
+    justify-content: space-between;
   }
   div {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
     align-items: center;
     text-align: center;
     margin: 0 15px 0 15px;
@@ -150,6 +148,8 @@ const ContainerHiUserCircle = styled(HiUserCircle)`
 `;
 
 const Dropdown = styled.div`
+  flex-direction: row;
+  justify-content: space-between;
   ul{
     list-style: none;
   }
@@ -209,4 +209,7 @@ const Dropdown = styled.div`
   }
 `;
 
-const DropdownTrigger = styled.div``;
+const DropdownTrigger = styled.div`
+  flex-direction: row;
+  justify-content: space-between;
+`;

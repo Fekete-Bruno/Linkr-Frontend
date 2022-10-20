@@ -20,6 +20,18 @@ function getUser (id) {
     return request;
 };
 
-export { createHeaders, getUser };
+function getUsers() {
+    const config = createHeaders()
+    const request = axios.get(`${BASE_URL}/users`, config);
+    return request;
+};
+
+function searchUser(query) {
+    const config = createHeaders()
+    const request = axios.get(`${BASE_URL}/users?keyword=${query}`, config);
+    return request;
+};
+
+export { createHeaders, getUser, getUsers, searchUser };
 
   
