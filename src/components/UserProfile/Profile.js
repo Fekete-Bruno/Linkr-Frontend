@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { ReactTagify } from 'react-tagify';
 import { getUser } from "../../Common/Service";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from 'react-router-dom';
