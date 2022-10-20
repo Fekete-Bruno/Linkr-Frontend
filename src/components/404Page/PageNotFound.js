@@ -9,7 +9,7 @@ export default function PageNotFound () {
         <ErrorBox>
             <h1>404</h1>
             <p>Linkr not found </p>
-            <a onClick={() => navigate("/logged")}>
+            <a onClick={() => navigate("/timeline")}>
                 click here to go to a real Linkr
             </a>
         </ErrorBox>
