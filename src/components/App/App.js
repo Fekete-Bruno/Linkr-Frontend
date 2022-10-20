@@ -8,12 +8,10 @@ import Logged from "../Logged/Logged";
 import UserProfile from "../UserProfile/Profile";
 
 export default function App() {
-
-    const BASE_URL = 'http://localhost:5000';
     
     return (
         <>
-            <UserContext.Provider value={{ BASE_URL }}>
+            <UserContext.Provider value={{ BASE_URL: process.env.REACT_APP_BASE_URL }}>
                 <GlobalStyle />
                 <BrowserRouter>
                     <Routes>
