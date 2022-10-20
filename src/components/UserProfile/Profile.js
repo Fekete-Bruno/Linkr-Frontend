@@ -1,4 +1,5 @@
-import styled from "styled-components";
+import styled from 'styled-components';
+import { ReactTagify } from 'react-tagify';
 import { BsHeart } from 'react-icons/bs';
 import { getUser } from "../../Common/Service";
 import { useEffect, useState } from "react";
@@ -34,7 +35,7 @@ export default function UserProfile () {
                     </div>
                     <div className="right">
                         <h2>Nezuko</h2>
-                        <p>description djfioklrkjegiojkçrgfnkcklc,x</p>
+                        <p>description djfioklrk #no_meio_mesmo #duas#juntas jegiojkçrgfnkcklc,x #aleatório #feliz</p>
                         <a>link</a>
                     </div>
                 </PostBox>
