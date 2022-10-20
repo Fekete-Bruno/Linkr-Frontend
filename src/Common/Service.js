@@ -1,6 +1,9 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000";
+// NAO MUDAR PRA NAO TRAVAR O DEPLOY
+// COLOCAR NO .env A VARIAVEL ABAIXO PARA TESTES
+// REACT_APP_API_BASE_URL=https://localhost:5000
+const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 function createHeaders() {
 
@@ -10,7 +13,6 @@ function createHeaders() {
         Authorization: `Bearer ${auth.token}`
       }
     };
-  
     return config;
 };
 
@@ -32,6 +34,10 @@ function searchUser(query) {
     return request;
 };
 
-export { createHeaders, getUser, getUsers, searchUser };
+function postUrls(body){
+  const config = createHeaders();
+  const request = axios.post(`${BASE_URL}/post`,body,config);
+  return request;
+}
 
-  
+export { createHeaders, getUser, getUsers, searchUser, ṕostUrls };
