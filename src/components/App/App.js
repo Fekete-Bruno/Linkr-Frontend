@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import GlobalStyle from "../../Styles/GlobalStyles";
 import UserContext from "../../Contexts/UserContext";
 import PrivatePage from "../../Common/PrivatePage";
+import PageNotFound from "../404Page/PageNotFound";
 import SignUp from "../SignUp/SignUp.js";
 import SignIn from "../SignIn/SignIn";
 import Logged from "../Logged/Logged";
@@ -19,6 +20,14 @@ export default function App() {
                     <Routes>
                         <Route path="/" element={<SignIn />} />
                         <Route path="/signup" element={<SignUp />} />
+                        <Route 
+                            path="/404" 
+                            element={
+                                <PrivatePage>
+                                    <PageNotFound  />
+                                </PrivatePage>
+                            }
+                        />
                         <Route 
                             path="/logged" 
                             element={

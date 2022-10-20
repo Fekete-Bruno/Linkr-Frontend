@@ -80,7 +80,7 @@ export default function Header() {
   return (
     <Wraped>
       <div>
-        <h1>Linkr</h1>
+        <h1 onClick={() => navigate('/logged')}>Linkr</h1>
         {/* <img src="" alt=".." /> */}
         <Dropdown ref={menuRef}>
           <DropdownTrigger onClick={() => { setOpen(!open); toggleArrow(); }}>
@@ -119,6 +119,12 @@ const Wraped = styled.header`
     line-height: 54px;
     letter-spacing: 0.05em;
     padding: 10px 28px;
+    cursor: pointer;
+
+    :active {
+            transform: scale(0.98);
+            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
+        }
   }
   div {
     display: flex;
