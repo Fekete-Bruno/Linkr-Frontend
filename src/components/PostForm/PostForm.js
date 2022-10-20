@@ -39,6 +39,10 @@ export default function PostForm(){
         }
         setDisabled(true);
 
+        if(form.description===""){
+            form.description=undefined;
+        }
+
         postUrls(form).then((resp)=>{
             console.log(resp);
             setForm({...initial});
