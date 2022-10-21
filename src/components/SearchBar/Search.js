@@ -4,12 +4,25 @@ import { BsSearch } from 'react-icons/bs';
 import { useState, useEffect } from "react";
 import { searchUser } from "../../Common/Service";
 import SearchResults from "./SearchResults";
+import { useRef } from "react";
 
 export default function SearchBar () {
 
+    let searchRef = useRef();
     const [keyword, setKeyword] = useState("");
     const [users, setUsers] = useState([]);
     const [hidden, setHidden] = useState(true);
+
+    useEffect(() => {
+        let handler = (e) => {
+          if (!searchRef.current.contains(e.target)) {
+            setUsers([]);
+            setHidden(true);
+          }
+        }
+    
+        document.addEventListener("mousedown", handler);
+      }, []);
 
     useEffect(() => {
 
@@ -18,7 +31,7 @@ export default function SearchBar () {
             setUsers(res.data);
             setHidden(false);
         }));
-        promise.catch(() => setHidden(true))
+        promise.catch(() => setUsers([]))
 
     }, [keyword]);
 
@@ -29,14 +42,13 @@ export default function SearchBar () {
         promise.then((res => {
             setUsers(res.data);
             setHidden(false);
-        }));       
+        }));
+        promise.catch(() => setUsers([]))   
     };
-
-    console.log(keyword)
 
     return (
         <Wraped>
-            <SearchBox>
+            <SearchBox ref={searchRef}>
                 <form onSubmit={sendForm}>
                     <DebounceInput
                         minLength={3}

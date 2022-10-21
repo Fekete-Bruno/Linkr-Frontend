@@ -66,7 +66,7 @@ const Wraped = styled.div`
     }
 `
 const UserBox = styled.div`
-    padding: 10px 0;
+    padding: 10px 10px;
     justify-content: space-around;
 `
 const UserPicture = styled.div`
@@ -80,6 +80,7 @@ const UserPicture = styled.div`
     cursor: pointer;
 `
 const UserName = styled.div`
+    margin-left: 10px;
     font-family: 'Lato';
     font-style: normal;
     font-weight: 400;

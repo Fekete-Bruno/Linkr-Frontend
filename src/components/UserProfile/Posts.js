@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { BsHeart } from 'react-icons/bs';
+import Microlink from '@microlink/react';
 
 export default function Posts ({posts, img, name}) {
     console.log(posts)
@@ -19,7 +20,7 @@ export default function Posts ({posts, img, name}) {
                             <div className="right">
                                 <h2>{name}</h2>
                                 <p>{post.description}</p>
-                                <a>{post.url}</a>
+                                <Links url={post.url} target="_blank"/>
                             </div>
                         </PostBox>
                     ))}
@@ -46,10 +47,12 @@ const PostBox = styled.div`
     h2, p {
         font-size: 20px;
         line-height: 23px;
+        word-wrap: break-word;
     }
 
     p {
         opacity: .7;
+        line-height: 2em;
     }
 
     span {
@@ -97,3 +100,6 @@ const Message = styled.div`
     color: #FFFFFF;
     opacity: .9;
 `
+const Links = styled(Microlink)`
+    max-width: 85%;
+`;
