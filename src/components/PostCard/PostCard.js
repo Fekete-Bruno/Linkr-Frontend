@@ -25,7 +25,7 @@ export default function PostCard({ post }) {
                 <span>{post.likes}</span>
             </div>
             <div className="right">
-                <h2>{post.BsHeartname}</h2>
+                <h2>{post.name}</h2>
                 <ReactTagify
                     tagStyle={tagStyle}
                     tagClicked={tag => {
