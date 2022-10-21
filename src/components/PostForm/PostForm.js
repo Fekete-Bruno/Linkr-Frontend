@@ -6,18 +6,19 @@ import { postUrls } from "../../Common/Service";
 import Button from "../Buttons/Buttons";
 import Input from "../Inputs/Input";
 
-export default function PostForm(){
+export default function PostForm({newPost,setNewPost}){
     const userId = localStorage.getItem("linkr-userId");
     const initial = {
         userId,
         url: "",
         description:""
     }
+    const [form, setForm] = useState({...initial});
     const urlSchema = new RegExp(
-      "(https?://(?:www.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9].[^s]{2,}|www.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9].[^s]{2,}|https?://(?:www.|(?!www))[a-zA-Z0-9]+.[^s]{2,}|www.[a-zA-Z0-9]+.[^s]{2,})"
+      "((https?):\/\/)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])"
     );
     const [disabled, setDisabled] = useState(false);
-    const [form, setForm] = useState({...initial});
+    ;
     const img = localStorage.getItem("img");
 
     function handleForm(e) {
@@ -43,10 +44,10 @@ export default function PostForm(){
             form.description=undefined;
         }
 
-        postUrls(form).then((resp)=>{
-            console.log(resp);
+        postUrls(form).then(()=>{
             setForm({...initial});
             setDisabled(false);
+            setNewPost(!newPost);
         }).catch((error)=>{
             console.error(error);
             alert("Error during publication of your post, try again later!");
@@ -71,6 +72,7 @@ export default function PostForm(){
             className="post" 
             height="30px" 
             placeholder="http://..."
+            value = {form.url}
             onChange={handleForm}
             />
             <Input
@@ -79,6 +81,7 @@ export default function PostForm(){
             height="66px"
             placeholder="Tell the world more about it!"
             onChange={handleForm}
+            value = {form.description}
             />
             <Button className="post" type="submit" disabled={disabled}>
                 {disabled?<ThreeCircles color="white" height={30}/>:<>Publish</>}

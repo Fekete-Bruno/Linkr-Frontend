@@ -1,8 +1,19 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { getPosts } from "../../Common/Service";
 import PostForm from "../PostForm/PostForm";
 import PostContainer from "../PostsContainer/PostsContainer";
 
 export default function Timeline(){
+    const [posts,setPosts] = useState([]);
+    const [newPost,setNewPost] = useState(false);
+
+    useEffect(() => {
+        const promise = getPosts();
+        promise.then((res => {
+            setPosts(res.data);
+        }));
+    }, [newPost,setPosts]);
     return(
         <Page>
             <TimelineTitle>timeline</TimelineTitle>
@@ -10,8 +21,8 @@ export default function Timeline(){
             <Content>
 
                 <div>
-                <PostForm />
-                <PostContainer />
+                <PostForm newPost={newPost} setNewPost={setNewPost}/>
+                <PostContainer posts={posts}/>
                 </div>
 
 
