@@ -35,10 +35,8 @@ export default function SignUp() {
                 name,
                 img
             }
-            console.log(object);
-            console.log(context.BASE_URL);
 
-            const post = axios.post(context.BASE_URL + '/signup', object);
+            const post = axios.post(process.env.REACT_APP_API_BASE_URL + '/signup', object);
 
             post.then((answer) => {
                 alert('Conta criada com sucesso!');

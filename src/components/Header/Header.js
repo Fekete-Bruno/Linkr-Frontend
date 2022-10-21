@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect, useRef, useContext } from "react";
 import UserContext from "../../Contexts/UserContext"
 import { HiUserCircle } from "react-icons/hi";
@@ -10,6 +10,7 @@ import SearchBar from "../SearchBar/Search";
 
 export default function Header() {
   const img = localStorage.getItem("img");
+  const userId = localStorage.getItem("linkr-userId");
   const [open, setOpen] = useState(false);
   const [arrow, setArrow] = useState(<SlArrowDown />);
   const navigate = useNavigate();
@@ -81,6 +82,8 @@ export default function Header() {
     }
   }
 
+
+
   return (
     <Wraped>
       <div>
@@ -96,6 +99,8 @@ export default function Header() {
           <div className={`dropdown-menu ${open ? 'active' : 'inactive'}`}>
             <nav>
               <ul>
+                <li onClick={() => { navigate(`/user/${userId}`) }}>Me</li>
+                <li onClick={() => { navigate(`/timeline`) }}>Timeline</li>
                 <li onClick={() => { SignOut(); setOpen(!open); toggleArrow(); }}>SignOut</li>
                 <li onClick={() => { SignOutAll(); setOpen(!open); toggleArrow(); }}>SignOut All</li>
               </ul>
@@ -155,6 +160,15 @@ const ContainerHiUserCircle = styled(HiUserCircle)`
 const Dropdown = styled.div`
   ul{
     list-style: none;
+  }
+
+  Link {
+    text-decoration: none;
+    color: red;
+  }
+
+  a:visited {
+    color: none;
   }
 
   a {

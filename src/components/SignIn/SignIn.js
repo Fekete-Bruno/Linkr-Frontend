@@ -14,6 +14,8 @@ export default function SignIn() {
     localStorage.removeItem("token");
     localStorage.removeItem("img");
 
+    console.log(process.env.REACT_APP_API_BASE_URL);
+
     function handleForm(e) {
         e.preventDefault();
 
@@ -31,7 +33,7 @@ export default function SignIn() {
                 password
             }
 
-            const post = axios.post(context.BASE_URL + '/signin', body);
+            const post = axios.post(process.env.REACT_APP_API_BASE_URL + '/signin', body);
 
             post.then((answer) => {
                 console.log(answer.data);
