@@ -34,9 +34,11 @@ export default function SignIn() {
             const post = axios.post(context.BASE_URL + '/signin', body);
 
             post.then((answer) => {
+                console.log(answer.data);
                 localStorage.setItem("token", JSON.stringify({ token: answer.data.token }));
                 localStorage.setItem("img", answer.data.img);
-                navigate('/logged');
+                localStorage.setItem("linkr-userId", answer.data.id);
+                navigate('/timeline');
             });
 
             post.catch((error) => {
