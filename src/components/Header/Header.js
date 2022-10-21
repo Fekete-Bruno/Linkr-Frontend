@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef, useContext } from "react";
 import UserContext from "../../Contexts/UserContext"
 import { HiUserCircle } from "react-icons/hi";
-import { SlArrowDown } from "react-icons/sl";
-import { SlArrowUp } from "react-icons/sl";
+import { SlArrowDown, SlArrowUp } from "react-icons/sl";
+import SearchBar from "../SearchBar/Search";
 
 export default function Header() {
   const img = localStorage.getItem("img");
@@ -84,11 +84,13 @@ export default function Header() {
   return (
     <Wraped>
       <div>
-        <h1>Linkr</h1>
-        {/* <img src="" alt=".." /> */}
+        <h1 onClick={() => navigate('/timeline')}>Linkr</h1>
+
+        <SearchBar />
+
         <Dropdown ref={menuRef}>
           <DropdownTrigger onClick={() => { setOpen(!open); toggleArrow(); }}>
-            {img === 'null' ? <>{arrow}<ContainerHiUserCircle><HiUserCircle /></ContainerHiUserCircle></> : <>{arrow}<img src={img} alt="" /></>}
+            {img === 'null' ? <>{arrow}<ContainerHiUserCircle /></> : <>{arrow}<img src={img} alt="" /></>}
           </DropdownTrigger>
 
           <div className={`dropdown-menu ${open ? 'active' : 'inactive'}`}>
@@ -123,14 +125,16 @@ const Wraped = styled.header`
     line-height: 54px;
     letter-spacing: 0.05em;
     padding: 10px 28px;
+    cursor: pointer;
+  }
+  >div{
+    justify-content: space-between;
+    margin: 0 15px 0 15px;
   }
   div {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
     align-items: center;
     text-align: center;
-    margin: 0 15px 0 15px;
   }
   img {
     background-color: #ffffff;
@@ -208,4 +212,7 @@ const Dropdown = styled.div`
   }
 `;
 
-const DropdownTrigger = styled.div``;
+const DropdownTrigger = styled.div`
+  width: 100px;
+  justify-content: space-around;
+`;
