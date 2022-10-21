@@ -16,10 +16,12 @@ const PostBox = styled.div`
     h2, p {
         font-size: 20px;
         line-height: 23px;
+        word-wrap: break-word;
     }
 
     p {
         opacity: .7;
+        line-height: 2em;
     }
 
     span {

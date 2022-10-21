@@ -86,7 +86,7 @@ export default function Header() {
 
         <Dropdown ref={menuRef}>
           <DropdownTrigger onClick={() => { setOpen(!open); toggleArrow(); }}>
-            {img === 'null' ? <ContainerHiUserCircle>{arrow}<HiUserCircle /></ContainerHiUserCircle> : <>{arrow}<img src={img} alt="" /></>}
+            {img === 'null' ? <>{arrow}<ContainerHiUserCircle/></> : <>{arrow}<img src={img} alt="" /></>}
           </DropdownTrigger>
 
           <div className={`dropdown-menu ${open ? 'active' : 'inactive'}`}>
@@ -125,12 +125,12 @@ const Wraped = styled.header`
   }
   >div{
     justify-content: space-between;
+    margin: 0 15px 0 15px;
   }
   div {
     display: flex;
     align-items: center;
     text-align: center;
-    margin: 0 15px 0 15px;
   }
   img {
     background-color: #ffffff;
@@ -148,8 +148,6 @@ const ContainerHiUserCircle = styled(HiUserCircle)`
 `;
 
 const Dropdown = styled.div`
-  flex-direction: row;
-  justify-content: space-between;
   ul{
     list-style: none;
   }
@@ -210,6 +208,6 @@ const Dropdown = styled.div`
 `;
 
 const DropdownTrigger = styled.div`
-  flex-direction: row;
-  justify-content: space-between;
+  width: 100px;
+  justify-content: space-around;
 `;
