@@ -1,20 +1,17 @@
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
-import { useState, useContext } from "react";
-import UserContext from "../../Contexts/UserContext"
+import { useNavigate, Link, json } from "react-router-dom";
+import { useState } from "react";
 import styled from "styled-components";
 import Input from "../Inputs/Input.js";
+import UserAuthorization from "../../Common/userAuthorization.js";
 
 export default function SignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [disabled, setDisabled] = useState(false);
     const navigate = useNavigate();
-    const context = useContext(UserContext);
-    localStorage.removeItem("token");
-    localStorage.removeItem("img");
 
-    console.log(process.env.REACT_APP_API_BASE_URL);
+    UserAuthorization('/timeline');
 
     function handleForm(e) {
         e.preventDefault();
