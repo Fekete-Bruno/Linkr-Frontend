@@ -57,6 +57,12 @@ function deletePost(id) {
   return request;
 }
 
+function postLikes(body){
+  const config = createHeaders();
+  const request = axios.post(`${BASE_URL}/like`,body,config);
+  return request;
+}
+
 export {
   createHeaders,
   getUser,
@@ -66,4 +72,5 @@ export {
   getPosts,
   editPost,
   deletePost,
+  postLikes,
 };
