@@ -47,6 +47,10 @@ const PostBox = styled.div`
     width: 90%;
     padding-left: 20px;
     position: relative;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
   .title {
@@ -72,17 +76,20 @@ const PostBox = styled.div`
 
   form {
     align-items: flex-start;
+    height: 20px;
+    margin-bottom: 5px;
+    margin-top: 8px;
   }
 
   input {
     width: 100%;
+    padding: 8px;
     background-color: #ffffff;
     border-radius: 7px;
     color: #4c4c4c;
     border: none;
     font-family: Lato, sans-serif;
-    font-size: 17px;
-    line-height: 20px;
+    font-size: 20px;
     word-wrap: break-word;
   }
 
