@@ -155,6 +155,11 @@ const Wraped = styled.header`
       display: none;
     }
   }
+  
+  @media (max-width: 600px) {        
+      z-index: 2;
+  }
+
 `;
 
 const ContainerHiUserCircle = styled(HiUserCircle)`
