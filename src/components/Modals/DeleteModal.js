@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export default function DeleteModal({ closeModal }) {
+export default function DeleteModal({ closeModal, confirmDelete }) {
   return (
     <ModalWrapper>
       <div>
@@ -10,7 +10,9 @@ export default function DeleteModal({ closeModal }) {
           <button className="cancel" onClick={closeModal}>
             No, go back
           </button>
-          <button className="confirm">Yes, delete it</button>
+          <button className="confirm" onClick={confirmDelete}>
+            Yes, delete it
+          </button>
         </div>
       </div>
     </ModalWrapper>
@@ -27,7 +29,7 @@ const ModalWrapper = styled.body`
   justify-content: center;
   align-items: center;
   background-color: rgba(255, 255, 255, 0.8);
-  z-index: 2;
+  z-index: 4;
 
   div {
     background-color: #333333;
