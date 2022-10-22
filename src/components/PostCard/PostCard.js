@@ -11,12 +11,12 @@ import { useRef, useState } from "react";
 import { deletePost, postLikes } from "../../Common/Service";
 
 
-export default function PostCard({ post }) {
+export default function PostCard({ post, newPost, setNewPost}) {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState();
   const [disabled, setDisabled] = useState(true);
-  const [liked,setLiked] = useState(false);
+  const [liked,setLiked] = useState();
 
   const inputRef = useRef(null);
 
@@ -35,6 +35,7 @@ export default function PostCard({ post }) {
     .catch(()=>alert('Error when sending like, try again later'));
 
     setLiked(!liked);
+    setNewPost(!newPost);
   };
 
   const tagStyle = {
@@ -97,12 +98,12 @@ export default function PostCard({ post }) {
               navigate(`/hashtag/${tag.slice(1)}`);
             }}
           >
-            <p>{post.description}</p>
+            <p>{post.description[0].string}</p>
           </ReactTagify>
           <form>
             <input
               ref={inputRef}
-              placeholder={post.description}
+              placeholder={post.description[0].string}
               disabled={disabled}
             />
           </form>
