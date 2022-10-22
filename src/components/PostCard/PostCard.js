@@ -102,13 +102,12 @@ export default function PostCard({ post, newPost, setNewPost}) {
           >
             <p>{post.description[0].string}</p>
           </ReactTagify>
-          <form>
-            <input
-              ref={inputRef}
-              placeholder={post.description[0].string}
-              disabled={disabled}
+          ):(
+            <EditDescriptionInput
+              description = {post.description[0].string}
             />
-          </form>
+          )
+         }
           <Links url={post.url} target="_blank" />
         </div>
       </PostBox>
