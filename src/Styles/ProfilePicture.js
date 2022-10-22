@@ -7,6 +7,7 @@ const ProfilePicture = styled.div`
     background-size: cover;
     background-position: center;
     background-image: ${props => `url(${props.img})`};
+    cursor: pointer;
 `;
 
 export default ProfilePicture;

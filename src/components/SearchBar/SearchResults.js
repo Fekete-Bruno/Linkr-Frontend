@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { ThreeDots } from  'react-loader-spinner';
+import { ThreeCircles } from  'react-loader-spinner';
 
 export default function SearchResults ({users, hidden, setHidden}) {
 
@@ -16,14 +16,10 @@ export default function SearchResults ({users, hidden, setHidden}) {
             <div>
                 {users.length === 0 ? (
                     <LoaderBox>
-                        <ThreeDots 
-                            height = "100"
-                            width = "100"
-                            radius = "10"
+                        <ThreeCircles
+                            height = "60"
+                            width = "60"
                             color = '#FFFFFF'
-                            ariaLabel = 'three-dots-loading'     
-                            wrapperStyle
-                            wrapperClass
                         />
                     </LoaderBox>
                 ):(

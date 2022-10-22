@@ -7,8 +7,9 @@ import styled from "styled-components";
 import DeleteModal from "../Modals/DeleteModal";
 import { ReactTagify } from "react-tagify";
 import { useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { deletePost, postLikes } from "../../Common/Service";
+import EditDescriptionInput from "../Inputs/EditDescriptionInput";
 
 
 export default function PostCard({ post, newPost, setNewPost}) {
@@ -17,8 +18,6 @@ export default function PostCard({ post, newPost, setNewPost}) {
   const [selectedPost, setSelectedPost] = useState();
   const [disabled, setDisabled] = useState(true);
   const [liked,setLiked] = useState();
-
-  const inputRef = useRef(null);
 
   const userId = parseInt(localStorage.getItem("linkr-userId"));
 
@@ -58,7 +57,7 @@ export default function PostCard({ post, newPost, setNewPost}) {
         <div className="left">
           {
             post.img === null ? 
-            <ContainerHiCircle /> :
+            <ContainerHiCircle onClick={() => navigate(`/user/${post.userId}`)}/> :
             <ProfilePicture img={post.img} onClick={() => navigate(`/user/${post.userId}`)}/>
           }
           {
@@ -71,27 +70,30 @@ export default function PostCard({ post, newPost, setNewPost}) {
           <span>{post.likes}</span>
         </div>
         <div className="right">
-          <div className="title">
-            <h2 onClick={() => navigate(`/user/${post.userId}`)}>{post.name}</h2>
-            {post.userId === userId ? (
-              <div className="icons">
-                <HiPencil
-                  onClick={() => {
-                    setDisabled(!disabled);
-                    inputRef.current.focus();
-                  }}
-                />
-                <HiTrash
-                  onClick={() => {
-                    setModalOpen(true);
-                    setSelectedPost(post.postId);
-                  }}
-                />
-              </div>
-            ) : (
-              <></>
-            )}
-          </div>
+          <div>
+            <div className="title">
+              <h2 onClick={() => navigate(`/user/${post.userId}`)}>{post.name}</h2>
+              {post.userId === userId ? (
+                <div className="icons">
+                  <HiPencil
+                    onClick={() => {
+                      setDisabled(!disabled);
+                    }}
+                  />
+                  <HiTrash
+                    onClick={() => {
+                      setModalOpen(true);
+                      setSelectedPost(post.postId);
+                    }}
+                  />
+                </div>
+              ) : (
+                <></>
+              )}
+            </div>
+
+            {
+              disabled ? (
           <ReactTagify
             tagStyle={tagStyle}
             tagClicked={(tag) => {
@@ -100,13 +102,13 @@ export default function PostCard({ post, newPost, setNewPost}) {
           >
             <p>{post.description[0].string}</p>
           </ReactTagify>
-          <form>
-            <input
-              ref={inputRef}
-              placeholder={post.description[0].string}
-              disabled={disabled}
+          ):(
+            <EditDescriptionInput
+              description = {post.description[0].string}
             />
-          </form>
+          )
+         }
+            </div>
           <Links url={post.url} target="_blank" />
         </div>
       </PostBox>
@@ -115,5 +117,14 @@ export default function PostCard({ post, newPost, setNewPost}) {
 }
 
 const Links = styled(Microlink)`
-  max-width: 85%;
+  width: 100%;
+  height: 65%;
+  border-radius: 10px;
+  color: #fff;
+  background-color: #171717;
+
+  :hover {
+    background-color: #171717;
+    filter: brightness(120%);
+  }
 `;
