@@ -6,19 +6,16 @@ export default function EditDescriptionInput ({description}) {
 
     useEffect(() => {
         if (inputRef.current)  {
-          inputRef.current
           inputRef.current.focus();
         }
     }, []);
 
     return (
-
         <form>
             <input
               ref={inputRef}
               placeholder={description}
             />
         </form>
-
     )
 }
