@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import { useState, useContext } from "react";
-import UserContext from "../../Contexts/UserContext";
+import { useState } from "react";
 import styled from "styled-components";
 import Input from "../Inputs/Input.js";
+import UserAuthorization from "../../Common/userAuthorization.js";
 
 export default function SignUp() {
     const [email, setEmail] = useState('');
@@ -11,8 +11,9 @@ export default function SignUp() {
     const [name, setName] = useState('');
     const [img, setImg] = useState(null);
     const [disabled, setDisabled] = useState(false);
-    const context = useContext(UserContext);
     const navigate = useNavigate();
+
+    UserAuthorization('/timeline');
 
     function handleForm(e) {
         e.preventDefault();

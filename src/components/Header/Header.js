@@ -1,9 +1,8 @@
 import React from "react";
 import axios from "axios";
 import styled from "styled-components";
-import { useNavigate, Link } from "react-router-dom";
-import { useState, useEffect, useRef, useContext } from "react";
-import UserContext from "../../Contexts/UserContext"
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
 import { HiUserCircle } from "react-icons/hi";
 import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 import SearchBar from "../SearchBar/Search";
@@ -14,7 +13,6 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const [arrow, setArrow] = useState(<SlArrowDown />);
   const navigate = useNavigate();
-  const context = useContext(UserContext);
   let menuRef = useRef();
 
   useEffect(() => {
@@ -37,7 +35,7 @@ export default function Header() {
         Authorization: `Bearer ${token}`
       }
     };
-    const signout = axios.delete(context.BASE_URL + '/signout', config);
+    const signout = axios.delete(process.env.REACT_APP_API_BASE_URL + '/signout', config);
 
     signout.then(() => {
       localStorage.clear();
@@ -60,7 +58,7 @@ export default function Header() {
         Authorization: `Bearer ${token}`
       }
     };
-    const signoutall = axios.delete(context.BASE_URL + '/signoutall', config);
+    const signoutall = axios.delete(process.env.REACT_APP_API_BASE_URL + '/signoutall', config);
 
     signoutall.then(() => {
       localStorage.clear();
