@@ -121,4 +121,9 @@ const Links = styled(Microlink)`
   border-radius: 10px;
   color: #fff;
   background-color: #171717;
+
+  :hover {
+    background-color: #171717;
+    filter: brightness(120%);
+  }
 `;

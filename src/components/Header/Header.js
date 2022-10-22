@@ -80,8 +80,6 @@ export default function Header() {
     }
   }
 
-
-
   return (
     <Wraped>
       <div>
@@ -105,9 +103,6 @@ export default function Header() {
             </nav>
           </div>
         </Dropdown>
-
-
-
       </div>
     </Wraped>
   );
