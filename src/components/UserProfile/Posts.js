@@ -2,9 +2,12 @@ import styled from "styled-components";
 import { BsHeart } from "react-icons/bs";
 import { HiTrash, HiPencil } from "react-icons/hi";
 import Microlink from "@microlink/react";
+import { useNavigate } from "react-router-dom";
 
-export default function Posts({ posts, img, name, editClick, delClick }) {
-  console.log(posts);
+export default function Posts({ posts, img, name, userId, editClick, delClick }) {
+
+  const navigate = useNavigate();
+
   return (
     <>
       {posts.length === 0 ? (
@@ -14,13 +17,18 @@ export default function Posts({ posts, img, name, editClick, delClick }) {
           {posts.map((post) => (
             <PostBox key={post.id}>
               <div className="left">
-                <ProfilePicture img={img} />
+                <ProfilePicture 
+                  img={img}
+                  onClick={() => navigate(`/user/${userId}`)}
+                />
                 <BsHeart className="heart" />
                 <span>{post.likes}</span>
               </div>
               <div className="right">
                 <div className="title">
-                  <h2>{name}</h2>
+                  <h2 onClick={() => navigate(`/user/${userId}`)}>
+                    {name}
+                  </h2>
                   <div className="icons">
                     <HiPencil onClick={editClick} />
                     <HiTrash onClick={delClick} />
@@ -52,12 +60,18 @@ const PostBox = styled.div`
 
   h2,
   p {
-    font-size: 20px;
     line-height: 23px;
     word-wrap: break-word;
   }
 
+  h2 {
+    font-size: 22px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
   p {
+    font-size: 20px;
     opacity: 0.7;
     line-height: 2em;
   }
@@ -111,6 +125,7 @@ const ProfilePicture = styled.div`
   background-size: cover;
   background-position: center;
   background-image: ${(props) => `url(${props.img})`};
+  cursor: pointer;
 `;
 
 const Message = styled.div`

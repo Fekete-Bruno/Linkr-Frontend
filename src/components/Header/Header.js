@@ -87,7 +87,7 @@ export default function Header() {
   return (
     <Wraped>
       <div>
-        <h1 onClick={() => navigate('/timeline')}>Linkr</h1>
+        <h1 onClick={() => navigate('/timeline')}>linkr</h1>
 
         <SearchBar />
 

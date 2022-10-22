@@ -99,6 +99,10 @@ const PostFormContainer = styled.div`
     h1{
         width: 98%;
         color: grey;
+        font-family: 'Lato';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 22px;
     }
     background-color: white;
     display: flex;
@@ -123,6 +127,7 @@ const Wrapper = styled.div`
     background-color: white;
     display: flex;
     padding: 1vh;
+    margin-bottom: 30px;
     &>*{
         margin: 1vh;
     }
