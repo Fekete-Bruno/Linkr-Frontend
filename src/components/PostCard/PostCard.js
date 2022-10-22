@@ -1,6 +1,6 @@
 import PostBox from "../../Styles/PostBox";
 import ProfilePicture from "../../Styles/ProfilePicture";
-import { HeartDisliked, HeartLiked } from "../../Styles/Icons";
+import { HeartDisliked, HeartLiked, ContainerHiCircle } from "../../Styles/Icons";
 import { HiTrash, HiPencil } from "react-icons/hi";
 import Microlink from "@microlink/react";
 import styled from "styled-components";
@@ -55,7 +55,11 @@ export default function PostCard({ post }) {
       )}
       <PostBox>
         <div className="left">
-          <ProfilePicture img={post.img} onClick={() => navigate(`/user/${post.userId}`)}/>
+          {
+            post.img === null ? 
+            <ContainerHiCircle /> :
+            <ProfilePicture img={post.img} onClick={() => navigate(`/user/${post.userId}`)}/>
+          }
           {
             liked?
 

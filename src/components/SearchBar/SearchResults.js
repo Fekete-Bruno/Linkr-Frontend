@@ -6,6 +6,11 @@ export default function SearchResults ({users, hidden, setHidden}) {
 
     const navigate = useNavigate();
 
+    function redirectToProfilePage (id) {
+        navigate(`/user/${id}`);
+        setHidden(true)
+    }
+
     return (
         <Wraped hidden={hidden}>
             <div>
@@ -23,19 +28,17 @@ export default function SearchResults ({users, hidden, setHidden}) {
                     </LoaderBox>
                 ):(
                     <>
-                        {users.map((user) => (
-                            <UserBox>
+                        {users.map((user, key) => (
+                            <UserBox key = {key}>
                                 <UserPicture 
                                     img = {user.img}
                                     onClick = {() => {
-                                        navigate(`/user/${user.id}`)
-                                        setHidden(true)
+                                        redirectToProfilePage(user.id)
                                     }}
                                 />
                                 <UserName 
                                     onClick = {() => {
-                                    navigate(`/user/${user.id}`)
-                                    setHidden(true)
+                                        redirectToProfilePage(user.id)
                                 }}>
                                 {user.name}
                                 </UserName>
