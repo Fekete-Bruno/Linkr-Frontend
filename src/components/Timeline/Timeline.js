@@ -49,8 +49,9 @@ const Content = styled.div`
 
 const TimelineTitle = styled.div`
     margin: 2vh 0;
-    color:white;
-    font-family: 'Passion One';
+    font-family: 'Oswald';
+    font-style: normal;
     font-weight: 700;
-    font-size: 5vh;
+    font-size: 43px;
+    line-height: 64px;
 `;

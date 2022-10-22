@@ -1,6 +1,6 @@
 import PostBox from "../../Styles/PostBox";
 import ProfilePicture from "../../Styles/ProfilePicture";
-import { BsHeart, BsHeartFill } from "react-icons/bs";
+import { HeartDisliked, HeartLiked } from "../../Styles/Icons";
 import { HiTrash, HiPencil } from "react-icons/hi";
 import Microlink from "@microlink/react";
 import styled from "styled-components";
@@ -29,9 +29,13 @@ export default function PostCard({ post }) {
   }
 
   function handleLike(){
-    postLikes({userId,postId: post.postId}).then(()=>{console.log('LIKE')}).catch(()=>alert('Error when sending like, try again later'));
+
+    postLikes({userId,postId: post.postId})
+    .then(()=>{console.log('LIKE')})
+    .catch(()=>alert('Error when sending like, try again later'));
+
     setLiked(!liked);
-  }
+  };
 
   const tagStyle = {
     fontWeight: 700,
@@ -51,19 +55,19 @@ export default function PostCard({ post }) {
       )}
       <PostBox>
         <div className="left">
-          <ProfilePicture img={post.img} />
+          <ProfilePicture img={post.img} onClick={() => navigate(`/user/${post.userId}`)}/>
           {
             liked?
 
-            <BsHeartFill className="heart" onClick={handleLike} color="red"/>:
+            <HeartLiked  onClick={handleLike}/>:
 
-            <BsHeart className="heart" onClick={handleLike} color="red"/>
+            <HeartDisliked onClick={handleLike}/>
           }
           <span>{post.likes}</span>
         </div>
         <div className="right">
           <div className="title">
-            <h2>{post.name}</h2>
+            <h2 onClick={() => navigate(`/user/${post.userId}`)}>{post.name}</h2>
             {post.userId === userId ? (
               <div className="icons">
                 <HiPencil

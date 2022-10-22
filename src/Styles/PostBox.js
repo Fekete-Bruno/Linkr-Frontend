@@ -14,14 +14,20 @@ const PostBox = styled.div`
 
   h2,
   p {
-    font-size: 20px;
-    line-height: 23px;
     word-wrap: break-word;
   }
 
+  h2 {
+    margin-bottom: 10px;
+    font-size: 22px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
   p {
+    font-size: 20px;
+    line-height: 23px;
     opacity: 0.7;
-    line-height: 2em;
   }
 
   span {
@@ -33,20 +39,14 @@ const PostBox = styled.div`
     flex-direction: column;
   }
 
-  .heart {
-    font-size: 25px;
-    color: #fff;
-    margin-top: 20px;
-    margin-bottom: 5px;
-    cursor: pointer;
-  }
-
   .left {
     align-items: center;
   }
 
   .right {
+    width: 90%;
     padding-left: 20px;
+    position: relative;
   }
 
   .title {
@@ -63,6 +63,11 @@ const PostBox = styled.div`
     flex-direction: row;
     justify-content: space-between;
     margin: auto 5px;
+    cursor: pointer;
+
+    position: absolute;
+    top: 0;
+    right: 0;
   }
 
   form {

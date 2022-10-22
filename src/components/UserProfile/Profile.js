@@ -3,8 +3,8 @@ import { getUser } from "../../Common/Service";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Posts from "./Posts";
-import Loader from "../../Common/Loader";
 import DeleteModal from "../Modals/DeleteModal";
+import { ThreeCircles } from "react-loader-spinner";
 
 export default function UserProfile() {
   const params = useParams();
@@ -39,7 +39,7 @@ export default function UserProfile() {
       )}
       {user.length === 0 ? (
         <LeftSection>
-          <Loader />
+          <ThreeCircles color="white" />
         </LeftSection>
       ) : (
         <LeftSection>
@@ -52,6 +52,7 @@ export default function UserProfile() {
             posts={posts}
             img={user.img}
             name={user.name}
+            userId = {user.id}
             delClick={() => setModalOpen(true)}
           />
         </LeftSection>
