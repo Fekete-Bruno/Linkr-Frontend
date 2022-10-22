@@ -52,6 +52,7 @@ export default function UserProfile() {
             posts={posts}
             img={user.img}
             name={user.name}
+            userId = {user.id}
             delClick={() => setModalOpen(true)}
           />
         </LeftSection>
