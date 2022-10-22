@@ -108,6 +108,7 @@ export default function PostCard({ post, newPost, setNewPost}) {
             />
           )
          }
+            </div>
           <Links url={post.url} target="_blank" />
         </div>
       </PostBox>
