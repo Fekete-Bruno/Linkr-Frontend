@@ -48,7 +48,7 @@ export default function SearchResults ({users, hidden, setHidden}) {
 };
 
 const Wraped = styled.div`
-    width: 563px;
+    width: 33vw;
     height: auto;
     background: #E7E7E7;
     border-radius: 8px;
@@ -59,9 +59,14 @@ const Wraped = styled.div`
     visibility: ${props => props.hidden ? 'hidden' : 'visible'};
 
     > div {
+        width: 100%;
         padding-top: 45px;
         display: flex;
         flex-direction: column;
+    }
+
+    @media (max-width: 600px) {
+        width: 95vw;
     }
 `
 const UserBox = styled.div`
