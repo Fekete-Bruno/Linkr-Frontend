@@ -22,7 +22,7 @@ export default function Timeline() {
 
                 <div>
                     <PostForm newPost={newPost} setNewPost={setNewPost} />
-                    <PostContainer posts={posts} />
+                    <PostContainer posts={posts} newPost={newPost} setNewPost={setNewPost}/>
                 </div>
 
 
