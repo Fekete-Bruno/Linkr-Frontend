@@ -21,4 +21,5 @@ export const HeartLiked = styled(BsHeartFill)`
 export const ContainerHiCircle = styled(HiUserCircle)`
   width: 50px;
   height: 50px;
+  cursor: pointer;
 `

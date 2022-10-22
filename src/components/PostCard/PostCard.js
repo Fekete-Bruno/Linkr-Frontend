@@ -56,7 +56,7 @@ export default function PostCard({ post }) {
         <div className="left">
           {
             post.img === null ? 
-            <ContainerHiCircle /> :
+            <ContainerHiCircle onClick={() => navigate(`/user/${post.userId}`)}/> :
             <ProfilePicture img={post.img} onClick={() => navigate(`/user/${post.userId}`)}/>
           }
           {
