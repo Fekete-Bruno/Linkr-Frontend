@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { ThreeCircles } from  'react-loader-spinner';
+import { ContainerHiCircle } from "../../Styles/Icons";
 
 export default function SearchResults ({users, hidden, setHidden}) {
 
@@ -26,12 +27,19 @@ export default function SearchResults ({users, hidden, setHidden}) {
                     <>
                         {users.map((user, key) => (
                             <UserBox key = {key}>
-                                <UserPicture 
-                                    img = {user.img}
-                                    onClick = {() => {
-                                        redirectToProfilePage(user.id)
-                                    }}
+                                {
+                                    user.img === null ? 
+                                    <ContainerHiCircle 
+                                        onClick={() => 
+                                            redirectToProfilePage(user.id)
+                                        }/> :
+                                    <UserPicture 
+                                        img = {user.img}
+                                        onClick = {() => {
+                                            redirectToProfilePage(user.id)
+                                        }}
                                 />
+                                }    
                                 <UserName 
                                     onClick = {() => {
                                         redirectToProfilePage(user.id)
@@ -70,14 +78,14 @@ const Wraped = styled.div`
     }
 `
 const UserBox = styled.div`
+    width: 98%;
     padding: 10px 10px;
-    justify-content: space-around;
+    justify-content: flex-start;
 `
 const UserPicture = styled.div`
     width: 39px;
     height: 39px;
     border-radius: 50%;
-    background-color: red;
     background-size: cover;
     background-position: center;
     background-image: ${props => `url(${props.img})`};
