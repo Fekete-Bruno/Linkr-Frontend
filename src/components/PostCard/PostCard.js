@@ -12,12 +12,12 @@ import { deletePost, postLikes } from "../../Common/Service";
 import EditDescriptionInput from "../Inputs/EditDescriptionInput";
 
 
-export default function PostCard({ post }) {
+export default function PostCard({ post, newPost, setNewPost}) {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState();
   const [disabled, setDisabled] = useState(true);
-  const [liked,setLiked] = useState(false);
+  const [liked,setLiked] = useState();
 
   const userId = parseInt(localStorage.getItem("linkr-userId"));
 
@@ -34,6 +34,7 @@ export default function PostCard({ post }) {
     .catch(()=>alert('Error when sending like, try again later'));
 
     setLiked(!liked);
+    setNewPost(!newPost);
   };
 
   const tagStyle = {
@@ -93,21 +94,21 @@ export default function PostCard({ post }) {
 
             {
               disabled ? (
-                <ReactTagify
-                  tagStyle={tagStyle}
-                  tagClicked={(tag) => {
-                    navigate(`/hashtag/${tag.slice(1)}`);
-                  }}
-                >
-                  <p>{post.description}</p>
-                </ReactTagify>
-              ): (
-                <EditDescriptionInput
-                  description = {post.description} 
-                />
-              )
-            }
-          </div>
+          <ReactTagify
+            tagStyle={tagStyle}
+            tagClicked={(tag) => {
+              navigate(`/hashtag/${tag.slice(1)}`);
+            }}
+          >
+            <p>{post.description[0].string}</p>
+          </ReactTagify>
+          ):(
+            <EditDescriptionInput
+              description = {post.description[0].string}
+            />
+          )
+         }
+            </div>
           <Links url={post.url} target="_blank" />
         </div>
       </PostBox>
