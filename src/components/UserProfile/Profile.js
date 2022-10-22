@@ -18,9 +18,8 @@ export default function UserProfile() {
     const promise = getUser(params.id);
     promise.then((res) => {
       setUser(res.data);
-      console.log(user);
 
-      if (res.data.userPosts) {
+      if (res.data.userPosts[0].id !== null ){
         setPosts(res.data.userPosts);
       }
     });
@@ -45,7 +44,7 @@ export default function UserProfile() {
         <LeftSection>
           <UserInfos>
             <ProfilePicture img={user.img} />
-            <Title>{user.name}'s posts</Title>
+            <Title>{user.name}'s posts</Title> 
           </UserInfos>
           <Posts
             id={posts.id}

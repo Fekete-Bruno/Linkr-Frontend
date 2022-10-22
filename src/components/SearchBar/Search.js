@@ -28,6 +28,8 @@ export default function SearchBar () {
 
         const promise = searchUser(keyword);
         promise.then((res => {
+            console.log("res.data")
+            console.log(res.data)
             setUsers(res.data);
             setHidden(false);
         }));
@@ -47,8 +49,8 @@ export default function SearchBar () {
     };
 
     return (
-        <Wraped>
-            <SearchBox ref={searchRef}>
+        <Wraped ref={searchRef}>
+            <SearchBox>
                 <form onSubmit={sendForm}>
                     <DebounceInput
                         minLength={3}
@@ -67,7 +69,7 @@ export default function SearchBar () {
                     </button>                        
                 </form>
             </SearchBox>
-            <SearchResults  
+            <SearchResults
                 users={users} 
                 hidden={hidden}
                 setHidden={setHidden}
