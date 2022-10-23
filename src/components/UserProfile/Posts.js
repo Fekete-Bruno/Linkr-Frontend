@@ -4,6 +4,8 @@ import { HiTrash, HiPencil } from "react-icons/hi";
 import Microlink from "@microlink/react";
 import { useNavigate } from "react-router-dom";
 
+import Description from '../Description/Description';
+
 export default function Posts({ posts, img, name, userId, editClick, delClick }) {
 
   const navigate = useNavigate();
@@ -34,7 +36,7 @@ export default function Posts({ posts, img, name, userId, editClick, delClick })
                     <HiTrash onClick={delClick} />
                   </div>
                 </div>
-                <p>{post.description}</p>
+                <Description description={post.description} />
                 <Links url={post.url} target="_blank" />
               </div>
             </PostBox>
