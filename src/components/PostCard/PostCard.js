@@ -13,24 +13,24 @@ import Description from '../Description/Description'
 import ReactTooltip from "react-tooltip";
 
 
-export default function PostCard({ post, newPost, setNewPost }) {
+export default function PostCard({ postId, name, img, postUserId, url, description, likeArray, likes, newPost, setNewPost }) {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState();
   const [disabled, setDisabled] = useState(true);
   const userId = parseInt(localStorage.getItem("linkr-userId"));
-  const [liked, setLiked] = useState(post.likeArray.find((obj)=>obj.userId===userId));
+  const [liked, setLiked] = useState(likeArray.find((obj)=>obj.userId===userId));
   const [likeMessage,setLikeMessage] = useState('');
 
   useEffect(()=>{
-    const noUser = post.likeArray.filter((obj)=>obj.userId!==userId);
+    const noUser = likeArray.filter((obj)=>obj.userId!==userId);
     if(liked){
       if(noUser.length===0 || noUser[0].name===null){
         setLikeMessage('You');
       } else if(noUser.length===1){
         setLikeMessage('You, '+noUser[0].name);
       } else if(noUser.length>1){
-        setLikeMessage('You ,'+noUser[0].name+', '+noUser[1].name+' and other '+Number(post.likes-3)+' users');
+        setLikeMessage('You ,'+noUser[0].name+', '+noUser[1].name+' and other '+Number(likes-3)+' users');
       }
     } else {
       if(noUser.lenght===0){
@@ -40,7 +40,7 @@ export default function PostCard({ post, newPost, setNewPost }) {
       } else if(noUser.length===2){
         setLikeMessage(noUser[0].name+', '+noUser[1].name);
       } else if(noUser.length>2){
-        setLikeMessage(noUser[0].name+', '+noUser[1].name+' and other '+Number(post.likes-2)+' users');
+        setLikeMessage(noUser[0].name+', '+noUser[1].name+' and other '+Number(likes-2)+' users');
       }
     }
   },[liked,newPost]);
@@ -53,7 +53,7 @@ export default function PostCard({ post, newPost, setNewPost }) {
 
   function handleLike() {
 
-    postLikes({ userId, postId: post.postId })
+    postLikes({ userId, postId })
       .then(() => {
         setLiked(!liked);
         setNewPost(!newPost);
@@ -80,9 +80,9 @@ export default function PostCard({ post, newPost, setNewPost }) {
       <PostBox>
         <div className="left">
           {
-            post.img === null ?
-              <ContainerHiCircle onClick={() => navigate(`/user/${post.userId}`)} /> :
-              <ProfilePicture img={post.img} onClick={() => navigate(`/user/${post.userId}`)} />
+            img === null ?
+              <ContainerHiCircle onClick={() => navigate(`/user/${postUserId}`)} /> :
+              <ProfilePicture img={img} onClick={() => navigate(`/user/${postUserId}`)} />
           }
 
           {
@@ -95,7 +95,7 @@ export default function PostCard({ post, newPost, setNewPost }) {
 
           <span 
           data-tip={likeMessage}>
-            {post.likes}
+            {likes}
           <ReactTooltip place="left"/>
           </span>
 
@@ -103,8 +103,8 @@ export default function PostCard({ post, newPost, setNewPost }) {
         <div className="right">
           <div>
             <div className="title">
-              <h2 onClick={() => navigate(`/user/${post.userId}`)}>{post.name}</h2>
-              {post.userId === userId ? (
+              <h2 onClick={() => navigate(`/user/${postUserId}`)}>{name}</h2>
+              {postUserId === userId ? (
                 <div className="icons">
                   <HiPencil
                     onClick={() => {
@@ -114,7 +114,7 @@ export default function PostCard({ post, newPost, setNewPost }) {
                   <HiTrash
                     onClick={() => {
                       setModalOpen(true);
-                      setSelectedPost(post.postId);
+                      setSelectedPost(postId);
                     }}
                   />
                 </div>
@@ -126,11 +126,11 @@ export default function PostCard({ post, newPost, setNewPost }) {
             {
               disabled ? (
 
-              <Description description={post.description} />
+              <Description description={description} />
 
               ) : (
                 <EditDescriptionInput
-                  description={post.description
+                  description={description
                     .map(descriptionPart =>
                       descriptionPart.isHashtag ? 
                         `#${descriptionPart.string}`
@@ -143,7 +143,7 @@ export default function PostCard({ post, newPost, setNewPost }) {
               )
             }
           </div>
-          <Links url={post.url} target="_blank" />
+          <Links url={url} target="_blank" />
         </div>
       </PostBox>
     </>

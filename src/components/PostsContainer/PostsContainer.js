@@ -12,8 +12,16 @@ export default function PostContainer({ posts, newPost, setNewPost}) {
           posts.map((post) => {
             return( 
               <PostCard 
-                post={post}  
+                post={post}
+                likeArray={post.likeArray}  
+                likes={post.likes}
+                postId={post.postId}
+                img={post.img}
+                postUserId={post.userId}
+                name={post.name}
+                description={post.description}
                 newPost={newPost} 
+                url={post.url}
                 setNewPost={setNewPost}
               />
             );
