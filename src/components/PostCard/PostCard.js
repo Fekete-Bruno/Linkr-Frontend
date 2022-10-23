@@ -24,15 +24,6 @@ export default function PostCard({ post, newPost, setNewPost }) {
   const [liked, setLiked] = useState();
   const userId = parseInt(localStorage.getItem("linkr-userId"));
 
-  function keyPressed(e) {
-    if (e.key === 27) {
-      e.preventDefault();
-      alert("esc pressed");
-      setEditDisabled(!editDisabled);
-      console.log(editDisabled);
-    }
-  }
-
   function handleDelete() {
     setDelDisabled(true);
     deletePost(selectedPost)
