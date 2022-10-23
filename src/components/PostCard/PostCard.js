@@ -5,11 +5,12 @@ import { HiTrash, HiPencil } from "react-icons/hi";
 import Microlink from "@microlink/react";
 import styled from "styled-components";
 import DeleteModal from "../Modals/DeleteModal";
-import { useNavigate, Link } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { deletePost, postLikes } from "../../Common/Service";
 import EditDescriptionInput from "../Inputs/EditDescriptionInput";
 import Description from '../Description/Description'
+import ReactTooltip from "react-tooltip";
 
 
 export default function PostCard({ post, newPost, setNewPost }) {
@@ -19,6 +20,30 @@ export default function PostCard({ post, newPost, setNewPost }) {
   const [disabled, setDisabled] = useState(true);
   const userId = parseInt(localStorage.getItem("linkr-userId"));
   const [liked, setLiked] = useState(post.likeArray.find((obj)=>obj.userId===userId));
+  const [likeMessage,setLikeMessage] = useState('');
+
+  useEffect(()=>{
+    const noUser = post.likeArray.filter((obj)=>obj.userId!==userId);
+    if(liked){
+      if(noUser.length===0 || noUser[0].name===null){
+        setLikeMessage('You');
+      } else if(noUser.length===1){
+        setLikeMessage('You, '+noUser[0].name);
+      } else if(noUser.length>1){
+        setLikeMessage('You ,'+noUser[0].name+', '+noUser[1].name+' and other '+Number(post.likes-3)+' users');
+      }
+    } else {
+      if(noUser.lenght===0){
+        setLikeMessage('');
+      }else if(noUser.length===1){
+        setLikeMessage(noUser[0].name);
+      } else if(noUser.length===2){
+        setLikeMessage(noUser[0].name+', '+noUser[1].name);
+      } else if(noUser.length>2){
+        setLikeMessage(noUser[0].name+', '+noUser[1].name+' and other '+Number(post.likes-2)+' users');
+      }
+    }
+  },[liked,newPost]);
 
   function handleDelete() {
     deletePost(selectedPost)
@@ -29,11 +54,11 @@ export default function PostCard({ post, newPost, setNewPost }) {
   function handleLike() {
 
     postLikes({ userId, postId: post.postId })
-      .then(() => { console.log('LIKE') })
+      .then(() => {
+        setLiked(!liked);
+        setNewPost(!newPost);
+       })
       .catch(() => alert('Error when sending like, try again later'));
-
-    setLiked(!liked);
-    setNewPost(!newPost);
   };
 
   const tagStyle = {
@@ -59,6 +84,7 @@ export default function PostCard({ post, newPost, setNewPost }) {
               <ContainerHiCircle onClick={() => navigate(`/user/${post.userId}`)} /> :
               <ProfilePicture img={post.img} onClick={() => navigate(`/user/${post.userId}`)} />
           }
+
           {
             liked ?
 
@@ -66,7 +92,13 @@ export default function PostCard({ post, newPost, setNewPost }) {
 
               <HeartDisliked onClick={handleLike} />
           }
-          <span>{post.likes}</span>
+
+          <span 
+          data-tip={likeMessage}>
+            {post.likes}
+          <ReactTooltip place="left"/>
+          </span>
+
         </div>
         <div className="right">
           <div>
