@@ -5,19 +5,19 @@ import { HiTrash, HiPencil } from "react-icons/hi";
 import Microlink from "@microlink/react";
 import styled from "styled-components";
 import DeleteModal from "../Modals/DeleteModal";
-import { ReactTagify } from "react-tagify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import { deletePost, postLikes } from "../../Common/Service";
 import EditDescriptionInput from "../Inputs/EditDescriptionInput";
+import Description from '../Description/Description'
 
 
-export default function PostCard({ post, newPost, setNewPost}) {
+export default function PostCard({ post, newPost, setNewPost }) {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState();
   const [disabled, setDisabled] = useState(true);
-  const [liked,setLiked] = useState();
+  const [liked, setLiked] = useState();
 
   const userId = parseInt(localStorage.getItem("linkr-userId"));
 
@@ -27,11 +27,11 @@ export default function PostCard({ post, newPost, setNewPost}) {
       .catch((error) => console.log(error.message));
   }
 
-  function handleLike(){
+  function handleLike() {
 
-    postLikes({userId,postId: post.postId})
-    .then(()=>{console.log('LIKE')})
-    .catch(()=>alert('Error when sending like, try again later'));
+    postLikes({ userId, postId: post.postId })
+      .then(() => { console.log('LIKE') })
+      .catch(() => alert('Error when sending like, try again later'));
 
     setLiked(!liked);
     setNewPost(!newPost);
@@ -56,16 +56,16 @@ export default function PostCard({ post, newPost, setNewPost}) {
       <PostBox>
         <div className="left">
           {
-            post.img === null ? 
-            <ContainerHiCircle onClick={() => navigate(`/user/${post.userId}`)}/> :
-            <ProfilePicture img={post.img} onClick={() => navigate(`/user/${post.userId}`)}/>
+            post.img === null ?
+              <ContainerHiCircle onClick={() => navigate(`/user/${post.userId}`)} /> :
+              <ProfilePicture img={post.img} onClick={() => navigate(`/user/${post.userId}`)} />
           }
           {
-            liked?
+            liked ?
 
-            <HeartLiked  onClick={handleLike}/>:
+              <HeartLiked onClick={handleLike} /> :
 
-            <HeartDisliked onClick={handleLike}/>
+              <HeartDisliked onClick={handleLike} />
           }
           <span>{post.likes}</span>
         </div>
@@ -94,21 +94,24 @@ export default function PostCard({ post, newPost, setNewPost}) {
 
             {
               disabled ? (
-          <ReactTagify
-            tagStyle={tagStyle}
-            tagClicked={(tag) => {
-              navigate(`/hashtag/${tag.slice(1)}`);
-            }}
-          >
-            <p>{post.description[0].string}</p>
-          </ReactTagify>
-          ):(
-            <EditDescriptionInput
-              description = {post.description[0].string}
-            />
-          )
-         }
-            </div>
+
+              <Description description={post.description} />
+
+              ) : (
+                <EditDescriptionInput
+                  description={post.description
+                    .map(descriptionPart =>
+                      descriptionPart.isHashtag ? 
+                        `#${descriptionPart.string}`
+                        :
+                        descriptionPart.string
+                    )
+                    .join("")
+                  }
+                />
+              )
+            }
+          </div>
           <Links url={post.url} target="_blank" />
         </div>
       </PostBox>
