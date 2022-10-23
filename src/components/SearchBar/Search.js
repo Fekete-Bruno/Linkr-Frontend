@@ -78,6 +78,10 @@ export default function SearchBar () {
 
 const Wraped = styled.div`
     position: relative;
+    @media (max-width: 600px) {
+        margin: 0 2vw; 
+    }
+
 `
 
 const SearchBox = styled.div`
@@ -133,7 +137,7 @@ const SearchBox = styled.div`
     }
 
     @media (max-width: 600px) {
-        width: 95vw;
+        width: 100%;
         position: absolute;
         top: 0;
         z-index: 1;

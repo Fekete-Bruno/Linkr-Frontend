@@ -131,4 +131,9 @@ const Wrapper = styled.div`
     &>*{
         margin: 1vh;
     }
+
+    @media (max-width: 600px) {
+        width: 100vw;
+        border-radius: 0;
+    }
 `;
