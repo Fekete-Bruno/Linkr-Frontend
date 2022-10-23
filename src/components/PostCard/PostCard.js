@@ -30,7 +30,7 @@ export default function PostCard({ postId, name, img, postUserId, url, descripti
       } else if(noUser.length===1){
         setLikeMessage('You, '+noUser[0].name);
       } else if(noUser.length>1){
-        setLikeMessage('You ,'+noUser[0].name+', '+noUser[1].name+' and other '+Number(likes-3)+' users');
+        setLikeMessage('You ,'+noUser[0].name+' and other '+Number(likes-2)+' users');
       }
     } else {
       if(noUser.lenght===0){
@@ -59,12 +59,6 @@ export default function PostCard({ postId, name, img, postUserId, url, descripti
         setNewPost(!newPost);
        })
       .catch(() => alert('Error when sending like, try again later'));
-  };
-
-  const tagStyle = {
-    fontWeight: 700,
-    fontSize: "20px",
-    cursor: "pointer",
   };
 
   return (
