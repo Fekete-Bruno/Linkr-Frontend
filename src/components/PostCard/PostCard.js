@@ -17,9 +17,8 @@ export default function PostCard({ post, newPost, setNewPost }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState();
   const [disabled, setDisabled] = useState(true);
-  const [liked, setLiked] = useState();
-
   const userId = parseInt(localStorage.getItem("linkr-userId"));
+  const [liked, setLiked] = useState(post.likeArray.find((obj)=>obj.userId===userId));
 
   function handleDelete() {
     deletePost(selectedPost)
