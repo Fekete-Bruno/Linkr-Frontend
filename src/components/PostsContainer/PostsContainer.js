@@ -11,8 +11,7 @@ export default function PostContainer({ posts, newPost, setNewPost}) {
         ) : (
           posts.map((post) => {
             return( 
-              <PostCard 
-                post={post}
+              <PostCard
                 likeArray={post.likeArray}  
                 likes={post.likes}
                 postId={post.postId}
