@@ -28,8 +28,6 @@ export default function SearchBar () {
 
         const promise = searchUser(keyword);
         promise.then((res => {
-            console.log("res.data")
-            console.log(res.data)
             setUsers(res.data);
             setHidden(false);
         }));

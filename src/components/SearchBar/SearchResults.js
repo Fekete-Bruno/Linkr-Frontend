@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { ThreeCircles } from  'react-loader-spinner';
 import { ContainerHiCircle } from "../../Styles/Icons";
+import ProfilePicture from "../../Styles/ProfilePicture";
 
 export default function SearchResults ({users, hidden, setHidden}) {
 
@@ -33,7 +34,7 @@ export default function SearchResults ({users, hidden, setHidden}) {
                                         onClick={() => 
                                             redirectToProfilePage(user.id)
                                         }/> :
-                                    <UserPicture 
+                                    <ProfilePicture
                                         img = {user.img}
                                         onClick = {() => {
                                             redirectToProfilePage(user.id)
@@ -80,16 +81,10 @@ const Wraped = styled.div`
 const UserBox = styled.div`
     width: 98%;
     padding: 10px 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     justify-content: flex-start;
-`
-const UserPicture = styled.div`
-    width: 39px;
-    height: 39px;
-    border-radius: 50%;
-    background-size: cover;
-    background-position: center;
-    background-image: ${props => `url(${props.img})`};
-    cursor: pointer;
 `
 const UserName = styled.div`
     margin-left: 10px;

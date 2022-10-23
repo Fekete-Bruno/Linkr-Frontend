@@ -32,7 +32,7 @@ export default function Timeline() {
                 </div>
 
 
-                <div>Trending column COMING SOON...</div>
+                <div className="trending">Trending column COMING SOON...</div>
 
 
             </Content>
@@ -62,6 +62,12 @@ const Page = styled.div`
 const Content = styled.div`
     display: flex;
     justify-content: space-between;
+
+    .trending {
+        @media (max-width: 800px) {
+            display: none;
+        }
+    }
 `;
 
 const TimelineTitle = styled.div`

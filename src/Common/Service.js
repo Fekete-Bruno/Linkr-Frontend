@@ -15,9 +15,15 @@ function createHeaders() {
   return config;
 }
 
-function getUser(id) {
+function getUserPosts(id) {
   const config = createHeaders();
-  const request = axios.get(`${BASE_URL}/user/${id}`, config);
+  const request = axios.get(`${BASE_URL}/userposts/${id}`, config);
+  return request;
+}
+
+function getUserInfos(id) {
+  const config = createHeaders();
+  const request = axios.get(`${BASE_URL}/userinfos/${id}`, config);
   return request;
 }
 
@@ -65,7 +71,8 @@ function postLikes(body){
 
 export {
   createHeaders,
-  getUser,
+  getUserInfos,
+  getUserPosts,
   getUsers,
   searchUser,
   postUrls,

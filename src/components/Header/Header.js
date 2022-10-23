@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { HiUserCircle } from "react-icons/hi";
 import { SlArrowDown, SlArrowUp } from "react-icons/sl";
+import ProfilePicture from "../../Styles/ProfilePicture";
 import SearchBar from "../SearchBar/Search";
 
 export default function Header() {
@@ -91,7 +92,10 @@ export default function Header() {
 
         <Dropdown ref={menuRef}>
           <DropdownTrigger onClick={() => { setOpen(!open); toggleArrow(); }}>
-            {img === 'null' ? <>{arrow}<ContainerHiUserCircle /></> : <>{arrow}<img src={img} alt="" /></>}
+            {img === 'null' ? 
+              <>{arrow}<ContainerHiUserCircle /></> : 
+              <>{arrow}<ProfilePicture img ={img}/></>
+            }
           </DropdownTrigger>
 
           <div className={`dropdown-menu ${open ? 'active' : 'inactive'}`}>
@@ -140,14 +144,6 @@ const Wraped = styled.header`
     display: flex;
     align-items: center;
     text-align: center;
-  }
-
-  img {
-    background-color: #ffffff;
-    border-radius: 50%;
-    font-size: 32px;
-    width: 53px;
-    height: 53px;
   }
   
   .searchBar {
@@ -242,4 +238,6 @@ const Dropdown = styled.div`
 `;
 
 const DropdownTrigger = styled.div`
+  width: 75px;
+  justify-content: space-between;
 `;
