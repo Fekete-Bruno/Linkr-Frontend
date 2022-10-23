@@ -22,6 +22,7 @@ export default function UserProfile() {
         setPosts(res.data.posts);
       } else {
         setUser(res.data);
+        setPosts([]);
       }
     });
 
