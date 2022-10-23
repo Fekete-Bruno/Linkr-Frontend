@@ -21,7 +21,6 @@ export default function PostCard({ postId, name, img, postUserId, url, descripti
   const userId = parseInt(localStorage.getItem("linkr-userId"));
   const [liked, setLiked] = useState(likeArray.find((obj)=>obj.userId===userId));
   const [likeMessage,setLikeMessage] = useState('');
-
   useEffect(()=>{
     const noUser = likeArray.filter((obj)=>obj.userId!==userId);
     if(liked){

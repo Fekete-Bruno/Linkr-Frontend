@@ -15,7 +15,7 @@ export default function SearchBar () {
 
     useEffect(() => {
         let handler = (e) => {
-          if (!searchRef.current.contains(e.target)) {
+          if (!searchRef?.current.contains(e.target)) {
             setUsers([]);
             setHidden(true);
           }
