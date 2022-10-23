@@ -12,6 +12,11 @@ const PostBox = styled.div`
   font-style: normal;
   color: #ffffff;
 
+  @media (max-width: 600px) {
+    width: 100vw;
+    border-radius: 0;
+  }
+
   h2,
   p {
     word-wrap: break-word;
@@ -40,6 +45,7 @@ const PostBox = styled.div`
   }
 
   .left {
+    width: 8%;
     align-items: center;
   }
 

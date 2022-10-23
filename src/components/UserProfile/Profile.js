@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { getUser } from "../../Common/Service";
+import { getUserInfos, getUserPosts } from "../../Common/Service";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Posts from "./Posts";
@@ -15,21 +15,23 @@ export default function UserProfile() {
   const [newPost,setNewPost] = useState(false);
 
   useEffect(() => {
-    const promise = getUser(params.id);
+    const promise = getUserInfos(params.id);
+
     promise.then((res) => {
-      if (res.data.posts !== undefined ){
-        setUser(res.data.user);
-        setPosts(res.data.posts);
-      } else {
-        setUser(res.data);
-        setPosts([]);
-      }
+      setUser(res.data);
+
+      const promise = getUserPosts(params.id);
+      promise.then((res) => {
+        setPosts(res.data);
+      })
+
     });
 
     promise.catch(() => {
       navigate("/404");
     });
-  }, [params.id]);
+
+  }, [params.id, newPost, setPosts]);  
 
   return (
     <>
@@ -69,15 +71,18 @@ const UserInfos = styled.div`
   width: 661px;
   padding: 40px;
   display: flex;
-  align-items: center;
   justify-content: flex-start;
+
+  @media (max-width: 600px) {
+    width: 98vw;
+    padding: 40px 0;
+  }
 `;
 
 const ProfilePicture = styled.div`
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background-color: red;
   background-size: cover;
   background-position: center;
   background-image: ${(props) => `url(${props.img})`};
@@ -88,7 +93,6 @@ const Title = styled.h1`
   font-style: normal;
   font-weight: 700;
   font-size: 43px;
-  line-height: 64px;
   color: #ffffff;
 
   margin-left: 20px;
