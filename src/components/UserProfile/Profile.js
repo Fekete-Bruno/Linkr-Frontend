@@ -3,8 +3,8 @@ import { getUser } from "../../Common/Service";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Posts from "./Posts";
-import DeleteModal from "../Modals/DeleteModal";
 import { ThreeCircles } from "react-loader-spinner";
+import { ContainerHiCircle } from "../../Styles/Icons";
 
 export default function UserProfile() {
   const params = useParams();
@@ -12,15 +12,17 @@ export default function UserProfile() {
 
   const [user, setUser] = useState([]);
   const [posts, setPosts] = useState([]);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [newPost,setNewPost] = useState(false);
 
   useEffect(() => {
     const promise = getUser(params.id);
     promise.then((res) => {
-      setUser(res.data);
-
-      if (res.data.userPosts[0].id !== null ){
-        setPosts(res.data.userPosts);
+      if (res.data.posts !== undefined ){
+        setUser(res.data.user);
+        setPosts(res.data.posts);
+      } else {
+        setUser(res.data);
+        setPosts([]);
       }
     });
 
@@ -31,11 +33,6 @@ export default function UserProfile() {
 
   return (
     <>
-      {modalOpen ? (
-        <DeleteModal closeModal={() => setModalOpen(false)} />
-      ) : (
-        <></>
-      )}
       {user.length === 0 ? (
         <LeftSection>
           <ThreeCircles color="white" />
@@ -43,16 +40,17 @@ export default function UserProfile() {
       ) : (
         <LeftSection>
           <UserInfos>
-            <ProfilePicture img={user.img} />
+            {
+            user.img === null ?
+              <ContainerHiCircle /> :
+              <ProfilePicture img={user.img} />
+            }
             <Title>{user.name}'s posts</Title> 
           </UserInfos>
           <Posts
-            id={posts.id}
+            newPost={newPost}
+            setNewPost={setNewPost}
             posts={posts}
-            img={user.img}
-            name={user.name}
-            userId = {user.id}
-            delClick={() => setModalOpen(true)}
           />
         </LeftSection>
       )}
