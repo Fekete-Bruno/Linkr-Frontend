@@ -1,6 +1,10 @@
 import PostBox from "../../Styles/PostBox";
 import ProfilePicture from "../../Styles/ProfilePicture";
-import { HeartDisliked, HeartLiked, ContainerHiCircle } from "../../Styles/Icons";
+import {
+  HeartDisliked,
+  HeartLiked,
+  ContainerHiCircle,
+} from "../../Styles/Icons";
 import { HiTrash, HiPencil } from "react-icons/hi";
 import Microlink from "@microlink/react";
 import styled from "styled-components";
@@ -11,31 +15,46 @@ import { useState } from "react";
 import { deletePost, postLikes } from "../../Common/Service";
 import EditDescriptionInput from "../Inputs/EditDescriptionInput";
 
-
-export default function PostCard({ post, newPost, setNewPost}) {
+export default function PostCard({ post, newPost, setNewPost }) {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState();
-  const [disabled, setDisabled] = useState(true);
-  const [liked,setLiked] = useState();
-
+  const [editDisabled, setEditDisabled] = useState(true);
+  const [delDisabled, setDelDisabled] = useState(false);
+  const [liked, setLiked] = useState();
   const userId = parseInt(localStorage.getItem("linkr-userId"));
 
-  function handleDelete() {
-    deletePost(selectedPost)
-      .then(() => setModalOpen(false))
-      .catch((error) => console.log(error.message));
+  function keyPressed(e) {
+    if (e.key === 27) {
+      e.preventDefault();
+      alert("esc pressed");
+      setEditDisabled(!editDisabled);
+      console.log(editDisabled);
+    }
   }
 
-  function handleLike(){
+  function handleDelete() {
+    setDelDisabled(true);
+    deletePost(selectedPost)
+      .then(() => {
+        setModalOpen(false);
+        setDelDisabled(false);
+        setSelectedPost();
+        window.location.reload(false);
+      })
+      .catch((error) => alert(`Couldn't delete post. Error: ${error.message}`));
+  }
 
-    postLikes({userId,postId: post.postId})
-    .then(()=>{console.log('LIKE')})
-    .catch(()=>alert('Error when sending like, try again later'));
+  function handleLike() {
+    postLikes({ userId, postId: post.postId })
+      .then(() => {
+        console.log("LIKE");
+      })
+      .catch(() => alert("Error when sending like, try again later"));
 
     setLiked(!liked);
     setNewPost(!newPost);
-  };
+  }
 
   const tagStyle = {
     fontWeight: 700,
@@ -49,35 +68,42 @@ export default function PostCard({ post, newPost, setNewPost}) {
         <DeleteModal
           closeModal={() => setModalOpen(false)}
           confirmDelete={() => handleDelete()}
+          delDisabled={delDisabled}
         />
       ) : (
         <></>
       )}
       <PostBox>
         <div className="left">
-          {
-            post.img === null ? 
-            <ContainerHiCircle onClick={() => navigate(`/user/${post.userId}`)}/> :
-            <ProfilePicture img={post.img} onClick={() => navigate(`/user/${post.userId}`)}/>
-          }
-          {
-            liked?
-
-            <HeartLiked  onClick={handleLike}/>:
-
-            <HeartDisliked onClick={handleLike}/>
-          }
+          {post.img === null ? (
+            <ContainerHiCircle
+              onClick={() => navigate(`/user/${post.userId}`)}
+            />
+          ) : (
+            <ProfilePicture
+              img={post.img}
+              onClick={() => navigate(`/user/${post.userId}`)}
+            />
+          )}
+          {liked ? (
+            <HeartLiked onClick={handleLike} />
+          ) : (
+            <HeartDisliked onClick={handleLike} />
+          )}
           <span>{post.likes}</span>
         </div>
         <div className="right">
           <div>
             <div className="title">
-              <h2 onClick={() => navigate(`/user/${post.userId}`)}>{post.name}</h2>
+              <h2 onClick={() => navigate(`/user/${post.userId}`)}>
+                {post.name}
+              </h2>
               {post.userId === userId ? (
                 <div className="icons">
                   <HiPencil
                     onClick={() => {
-                      setDisabled(!disabled);
+                      setEditDisabled(!editDisabled);
+                      setSelectedPost(post.postId);
                     }}
                   />
                   <HiTrash
@@ -92,23 +118,27 @@ export default function PostCard({ post, newPost, setNewPost}) {
               )}
             </div>
 
-            {
-              disabled ? (
-          <ReactTagify
-            tagStyle={tagStyle}
-            tagClicked={(tag) => {
-              navigate(`/hashtag/${tag.slice(1)}`);
-            }}
-          >
-            <p>{post.description[0].string}</p>
-          </ReactTagify>
-          ):(
-            <EditDescriptionInput
-              description = {post.description[0].string}
-            />
-          )
-         }
-            </div>
+            {editDisabled ? (
+              <ReactTagify
+                tagStyle={tagStyle}
+                tagClicked={(tag) => {
+                  navigate(`/hashtag/${tag.slice(1)}`);
+                }}
+              >
+                <p>{post.description[0].string}</p>
+              </ReactTagify>
+            ) : (
+              <EditDescriptionInput
+                description={post.description[0].string}
+                selectedPost={selectedPost}
+                editDisabled={editDisabled}
+                setEditDisabled={setEditDisabled}
+                setSelectedPost={setSelectedPost}
+                newPost={setNewPost}
+                setNewPost={setNewPost}
+              />
+            )}
+          </div>
           <Links url={post.url} target="_blank" />
         </div>
       </PostBox>

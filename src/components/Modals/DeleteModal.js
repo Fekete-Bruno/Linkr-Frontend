@@ -1,6 +1,11 @@
 import styled from "styled-components";
+import { ThreeCircles } from "react-loader-spinner";
 
-export default function DeleteModal({ closeModal, confirmDelete }) {
+export default function DeleteModal({
+  closeModal,
+  confirmDelete,
+  delDisabled,
+}) {
   return (
     <ModalWrapper>
       <Background />
@@ -8,12 +13,22 @@ export default function DeleteModal({ closeModal, confirmDelete }) {
         Are you sure you want <br />
         to delete this post?
         <div className="buttons">
-          <button className="cancel" onClick={closeModal}>
-            No, go back
-          </button>
-          <button className="confirm" onClick={confirmDelete}>
-            Yes, delete it
-          </button>
+          {delDisabled ? (
+            <ThreeCircles color="white" height={30} />
+          ) : (
+            <>
+              <button className="cancel" onClick={closeModal}>
+                No, go back
+              </button>
+              <button
+                className="confirm"
+                onClick={confirmDelete}
+                disabled={delDisabled}
+              >
+                Yes, delete it
+              </button>
+            </>
+          )}
         </div>
       </DeleteBox>
     </ModalWrapper>
@@ -66,7 +81,8 @@ const DeleteBox = styled.div`
     justify-content: space-between;
   }
 
-  .confirm, .cancel {
+  .confirm,
+  .cancel {
     width: 134px;
     height: 37px;
     margin-top: 25px;
@@ -79,8 +95,8 @@ const DeleteBox = styled.div`
     cursor: pointer;
 
     :active {
-        transform: scale(0.98);
-        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
+      transform: scale(0.98);
+      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
     }
   }
 
@@ -94,4 +110,4 @@ const DeleteBox = styled.div`
     background-color: #ffffff;
     color: #1877f2;
   }
-`
+`;
