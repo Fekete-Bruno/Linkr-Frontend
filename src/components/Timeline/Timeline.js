@@ -48,14 +48,15 @@ const Page = styled.div`
     flex-direction: column;
     color: white;
 
-    .searchBar {
-        @media (min-width: 600px) {
-            display: none;
-        }
+    @media (max-width: 800px) {
+        margin: 15vh 0;
     }
 
     .searchBar {
         margin-bottom: 6vh;
+        @media (min-width: 600px) {
+            display: none;
+        }
     }
 `;
 
@@ -77,5 +78,9 @@ const TimelineTitle = styled.div`
     font-weight: 700;
     font-size: 43px;
     line-height: 64px;
+
+    @media (max-width: 800px) {
+        margin: 2vh 2vh;
+    }
     
 `;
