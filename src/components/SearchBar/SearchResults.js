@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { ThreeCircles } from  'react-loader-spinner';
+import { ContainerHiCircle } from "../../Styles/Icons";
+import ProfilePicture from "../../Styles/ProfilePicture";
 
 export default function SearchResults ({users, hidden, setHidden}) {
 
@@ -26,12 +28,19 @@ export default function SearchResults ({users, hidden, setHidden}) {
                     <>
                         {users.map((user, key) => (
                             <UserBox key = {key}>
-                                <UserPicture 
-                                    img = {user.img}
-                                    onClick = {() => {
-                                        redirectToProfilePage(user.id)
-                                    }}
+                                {
+                                    user.img === null ? 
+                                    <ContainerHiCircle 
+                                        onClick={() => 
+                                            redirectToProfilePage(user.id)
+                                        }/> :
+                                    <ProfilePicture
+                                        img = {user.img}
+                                        onClick = {() => {
+                                            redirectToProfilePage(user.id)
+                                        }}
                                 />
+                                }    
                                 <UserName 
                                     onClick = {() => {
                                         redirectToProfilePage(user.id)
@@ -48,7 +57,7 @@ export default function SearchResults ({users, hidden, setHidden}) {
 };
 
 const Wraped = styled.div`
-    width: 563px;
+    width: 33vw;
     height: auto;
     background: #E7E7E7;
     border-radius: 8px;
@@ -59,24 +68,23 @@ const Wraped = styled.div`
     visibility: ${props => props.hidden ? 'hidden' : 'visible'};
 
     > div {
+        width: 100%;
         padding-top: 45px;
         display: flex;
         flex-direction: column;
     }
+
+    @media (max-width: 600px) {
+        width: 95vw;
+    }
 `
 const UserBox = styled.div`
+    width: 98%;
     padding: 10px 10px;
-    justify-content: space-around;
-`
-const UserPicture = styled.div`
-    width: 39px;
-    height: 39px;
-    border-radius: 50%;
-    background-color: red;
-    background-size: cover;
-    background-position: center;
-    background-image: ${props => `url(${props.img})`};
-    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
 `
 const UserName = styled.div`
     margin-left: 10px;

@@ -15,7 +15,7 @@ export default function SearchBar () {
 
     useEffect(() => {
         let handler = (e) => {
-          if (!searchRef.current.contains(e.target)) {
+          if (!searchRef?.current.contains(e.target)) {
             setUsers([]);
             setHidden(true);
           }
@@ -28,8 +28,6 @@ export default function SearchBar () {
 
         const promise = searchUser(keyword);
         promise.then((res => {
-            console.log("res.data")
-            console.log(res.data)
             setUsers(res.data);
             setHidden(false);
         }));
@@ -79,14 +77,18 @@ export default function SearchBar () {
 };
 
 const Wraped = styled.div`
+    position: relative;
 `
 
 const SearchBox = styled.div`
-    width: 563px;
+    width: 33vw;
     height: 45px;
     background: #FFFFFF;
     border-radius: 8px;
-    z-index: 3;
+    z-index: 1;
+
+    display: flex;
+    align-items: center;
 
     form {
         width: 98%;
@@ -128,5 +130,12 @@ const SearchBox = styled.div`
             color: #C6C6C6;
             cursor: pointer;
         }
+    }
+
+    @media (max-width: 600px) {
+        width: 95vw;
+        position: absolute;
+        top: 0;
+        z-index: 1;
     }
 `

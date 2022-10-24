@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import { getUser } from "../../Common/Service";
+import { getUserInfos, getUserPosts } from "../../Common/Service";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Posts from "./Posts";
-import DeleteModal from "../Modals/DeleteModal";
 import { ThreeCircles } from "react-loader-spinner";
+import { ContainerHiCircle } from "../../Styles/Icons";
 
 export default function UserProfile() {
   const params = useParams();
@@ -12,30 +12,29 @@ export default function UserProfile() {
 
   const [user, setUser] = useState([]);
   const [posts, setPosts] = useState([]);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [newPost,setNewPost] = useState(false);
 
   useEffect(() => {
-    const promise = getUser(params.id);
+    const promise = getUserInfos(params.id);
+
     promise.then((res) => {
       setUser(res.data);
 
-      if (res.data.userPosts[0].id !== null ){
-        setPosts(res.data.userPosts);
-      }
+      const promise = getUserPosts(params.id);
+      promise.then((res) => {
+        setPosts(res.data);
+      })
+
     });
 
     promise.catch(() => {
       navigate("/404");
     });
-  }, [params.id]);
+
+  }, [params.id, newPost, setPosts]);  
 
   return (
     <>
-      {modalOpen ? (
-        <DeleteModal closeModal={() => setModalOpen(false)} />
-      ) : (
-        <></>
-      )}
       {user.length === 0 ? (
         <LeftSection>
           <ThreeCircles color="white" />
@@ -43,16 +42,17 @@ export default function UserProfile() {
       ) : (
         <LeftSection>
           <UserInfos>
-            <ProfilePicture img={user.img} />
+            {
+            user.img === null ?
+              <ContainerHiCircle /> :
+              <ProfilePicture img={user.img} />
+            }
             <Title>{user.name}'s posts</Title> 
           </UserInfos>
           <Posts
-            id={posts.id}
+            newPost={newPost}
+            setNewPost={setNewPost}
             posts={posts}
-            img={user.img}
-            name={user.name}
-            userId = {user.id}
-            delClick={() => setModalOpen(true)}
           />
         </LeftSection>
       )}
@@ -71,15 +71,18 @@ const UserInfos = styled.div`
   width: 661px;
   padding: 40px;
   display: flex;
-  align-items: center;
   justify-content: flex-start;
+
+  @media (max-width: 600px) {
+    width: 98vw;
+    padding: 40px 0;
+  }
 `;
 
 const ProfilePicture = styled.div`
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background-color: red;
   background-size: cover;
   background-position: center;
   background-image: ${(props) => `url(${props.img})`};
@@ -90,7 +93,6 @@ const Title = styled.h1`
   font-style: normal;
   font-weight: 700;
   font-size: 43px;
-  line-height: 64px;
   color: #ffffff;
 
   margin-left: 20px;

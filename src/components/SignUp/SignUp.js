@@ -4,6 +4,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import Input from "../Inputs/Input.js";
 import UserAuthorization from "../../Common/userAuthorization.js";
+import { ThreeCircles } from "react-loader-spinner";
 
 export default function SignUp() {
     const [email, setEmail] = useState('');
@@ -71,7 +72,7 @@ export default function SignUp() {
                     <Input className="log" type="text" id="username" placeholder="Username" value={name} onChange={(e) => { setName(e.target.value) }} required></Input>
                     <Input className="log" type="text" id="img" placeholder="Picture url" value={img} onChange={(e) => { setImg(e.target.value) }}></Input>
 
-                    <button className="log" disabled={disabled}>Sign Up</button>
+                    <button className="log" disabled={disabled}>{disabled?<ThreeCircles color="white" height={50}/>:'Sign Up'}</button>
                     <Link to={'/'}><h1>Switch back to log in</h1></Link>
                 </Form>
             </ContainerForm>
@@ -182,5 +183,10 @@ const Form = styled.form`
         line-height: 40px;
         color: #FFFFFF;
         //color: ${props => props.disabled ? `#000000` : `#FFFFFF`}
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
     }
 `;

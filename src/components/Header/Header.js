@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { HiUserCircle } from "react-icons/hi";
 import { SlArrowDown, SlArrowUp } from "react-icons/sl";
+import ProfilePicture from "../../Styles/ProfilePicture";
 import SearchBar from "../SearchBar/Search";
 
 export default function Header() {
@@ -85,11 +86,16 @@ export default function Header() {
       <div>
         <h1 onClick={() => navigate('/timeline')}>linkr</h1>
 
-        <SearchBar />
+        <div className="searchBar">
+          <SearchBar />
+        </div>
 
         <Dropdown ref={menuRef}>
           <DropdownTrigger onClick={() => { setOpen(!open); toggleArrow(); }}>
-            {img === 'null' ? <>{arrow}<ContainerHiUserCircle /></> : <>{arrow}<img src={img} alt="" /></>}
+            {img === 'null' ? 
+              <>{arrow}<ContainerHiUserCircle /></> : 
+              <>{arrow}<ProfilePicture img ={img}/></>
+            }
           </DropdownTrigger>
 
           <div className={`dropdown-menu ${open ? 'active' : 'inactive'}`}>
@@ -109,45 +115,52 @@ export default function Header() {
 }
 
 const Wraped = styled.header`
-  width: 100%;
+  width: 100vw;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: #151515;
   color: #ffffff;
-  height: 72px;
   position: fixed;
   top: 0;
   z-index: 1;
+
   h1 {
     font-family: "Passion One";
     font-weight: 700;
     font-size: 49px;
     line-height: 54px;
     letter-spacing: 0.05em;
-    padding: 10px 28px;
     cursor: pointer;
   }
+
   >div{
+    width: 95vw;
     justify-content: space-between;
-    margin: 0 15px 0 15px;
   }
+
   div {
     display: flex;
     align-items: center;
     text-align: center;
   }
-  img {
-    background-color: #ffffff;
-    border-radius: 50%;
-    font-size: 32px;
-    width: 53px;
-    height: 53px;
-    margin-left: 12px;
+  
+  .searchBar {
+    @media (max-width: 600px) {        
+      display: none;
+    }
   }
+  
+  @media (max-width: 600px) {        
+      z-index: 2;
+  }
+
 `;
 
 const ContainerHiUserCircle = styled(HiUserCircle)`
-  transform: scale(3);
-  margin-right: 24px;
-  margin-left: 20px;
+  width: 50px;
+  height: 50px;
 `;
 
 const Dropdown = styled.div`
@@ -216,10 +229,15 @@ const Dropdown = styled.div`
     color: #E5E5E5;
     cursor: pointer;
   }
+
+  @media (max-width: 600px) {        
+      width: 50vw;
+      position: absolute;
+    }
   }
 `;
 
 const DropdownTrigger = styled.div`
-  width: 100px;
-  justify-content: space-around;
+  width: 75px;
+  justify-content: space-between;
 `;

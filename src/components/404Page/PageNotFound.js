@@ -29,12 +29,12 @@ const ErrorBox = styled.div`
 
     h1{
         font-weight: 700;
-        font-size: 20em;
+        font-size: 14em;
     }
 
     p{
         font-weight: 400;
-        font-size: 4em;
+        font-size: 3em;
         line-height: 1.5em;
     }
 

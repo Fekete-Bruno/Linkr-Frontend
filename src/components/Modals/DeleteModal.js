@@ -74,6 +74,14 @@ const DeleteBox = styled.div`
   color: #ffffff;
   z-index: 4;
 
+  position: absolute;
+  top: 20vh;
+
+  @media (max-width: 600px) {
+    width: 100vw;
+    border-radius: 0;
+  }
+
   div .buttons {
     width: 295px;
     display: flex;
