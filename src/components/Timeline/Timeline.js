@@ -4,6 +4,7 @@ import { getPosts } from "../../Common/Service";
 import PostForm from "../PostForm/PostForm";
 import PostContainer from "../PostsContainer/PostsContainer";
 import SearchBar from "../SearchBar/Search";
+import Trending from '../Trending/Trending';
 
 export default function Timeline() {
     const [posts, setPosts] = useState([]);
@@ -32,7 +33,9 @@ export default function Timeline() {
                 </div>
 
 
-                <div className="trending">Trending column COMING SOON...</div>
+                <div className="trending">
+                    <Trending />
+                </div>
 
 
             </Content>
@@ -65,6 +68,8 @@ const Content = styled.div`
     justify-content: space-between;
 
     .trending {
+        margin-left:25px;
+
         @media (max-width: 800px) {
             display: none;
         }
