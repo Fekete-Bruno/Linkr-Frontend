@@ -20,7 +20,7 @@ import Description from "../Description/Description";
 import ReactTooltip from "react-tooltip";
 import axios from "axios";
 
-function CommentJSX({ index, followedId, name, img, comment, postId }) {
+function CommentJSX({ followedId, name, img, comment }) {
   const [following, setFollowing] = useState('');
 
   let userId = localStorage.getItem("linkr-userId");
@@ -318,7 +318,7 @@ export default function PostCard({
       <CommentsDropDown>
         <div className={`dropdown-menu ${commentBox ? 'active' : 'inactive'}`}>
           <CommentBox>
-            {comments.map((comment, key) => <CommentJSX key={key} index={key + 1} followedId={comment.userId} name={comment.name} img={comment.img} comment={comment.comment} postId={postId} />)}
+            {comments.map((comment, key) => <CommentJSX key={key} followedId={comment.userId} name={comment.name} img={comment.img} comment={comment.comment} />)}
 
             <FormComment onSubmit={sendComment}>
               {img === localStorage.getItem("img") ? <ContainerHiUserCircle /> : <img src={localStorage.getItem("img")} alt='' />}
