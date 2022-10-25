@@ -221,7 +221,7 @@ export default function PostCard({
   };
 
   return (
-    <Wraped>
+    <>
       {modalOpen ? (
         <DeleteModal
           closeModal={() => setModalOpen(false)}
@@ -321,20 +321,16 @@ export default function PostCard({
             {comments.map((comment, key) => <CommentJSX key={key} followedId={comment.userId} name={comment.name} img={comment.img} comment={comment.comment} />)}
 
             <FormComment onSubmit={sendComment}>
-              {img === localStorage.getItem("img") ? <ContainerHiUserCircle /> : <img src={localStorage.getItem("img")} alt='' />}
+              {img === localStorage.getItem("img") ? <img src={localStorage.getItem("img")} alt='' /> : <ContainerHiUserCircle /> }
               <input type="text" id="comment" placeholder="Write a comment..." value={comment} onChange={(e) => { setComment(e.target.value) }}></input>
               <button type="submit" className="button"><ContainerFiSend /></button>
             </FormComment>
           </CommentBox>
         </div>
       </CommentsDropDown>
-    </Wraped>
+    </>
   );
 }
-
-const Wraped = styled.div`
-  position: relative;
-`;
 
 const Links = styled(Microlink)`
   width: 100%;
@@ -352,6 +348,7 @@ const Links = styled(Microlink)`
 const Comments = styled(AiOutlineComment)`
   transform: scale(2);
   margin-top: 20px;
+  cursor: pointer;
 `;
 
 const Text = styled.span`
@@ -366,23 +363,17 @@ const Text = styled.span`
 `;
 
 const CommentsDropDown = styled.div`
-  //position: absolute;
-  //top: 0;
-  //z-index: -1;
+  z-index: 0;
 
   .dropdown-menu.active {
     opacity: 1;
     visibility: visible;
-    //transform: translateY(0);
-    //transition: var(500ms) ease;
   }
 
   .dropdown-menu.inactive {
     opacity: 0;
     visibility: hidden;
     display: none;
-    //transform: translateY(-20px);
-    //transition: var(500ms) ease;
     margin-top: 0px;
   }
 `;
@@ -490,6 +481,7 @@ const FormComment = styled.form`
 const ContainerHiUserCircle = styled(HiUserCircle)`
   width: 39px;
   height: 39px;
+  cursor: pointer;
 `;
 
 const ContainerFiSend = styled(FiSend)`
@@ -497,9 +489,11 @@ const ContainerFiSend = styled(FiSend)`
   height: 24px;
   color: #F3F3F3;
   margin-left: -50px;
+  cursor: pointer;
 `;
 
 const Reposts = styled(BiRepost)`
   transform: scale(2);
   margin-top: 20px;
+  cursor: pointer;
 `;
