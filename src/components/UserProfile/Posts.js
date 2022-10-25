@@ -40,4 +40,9 @@ const Message = styled.div`
   font-weight: 500;
   color: #ffffff;
   opacity: 0.9;
+  
+  @media (max-width: 600px) {
+    width: 98vw;
+    padding: 2vw;
+  }
 `;
