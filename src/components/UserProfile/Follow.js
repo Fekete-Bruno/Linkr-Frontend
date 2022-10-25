@@ -32,7 +32,10 @@ export default function Follow() {
             setIsFollow(true);
             setDisabled(false)
         });
-        promise.catch(() => alert('Oops! Something went wrong 😞'));
+        promise.catch(() => {
+            alert('Oops! Something went wrong 😞');
+            setDisabled(false);
+        });
     }
 
     function unfollow() {
@@ -42,7 +45,10 @@ export default function Follow() {
             setIsFollow(false);
             setDisabled(false)
         });
-        promise.catch(() => alert('Oops! Something went wrong 😞'));
+        promise.catch(() => {
+            alert('Oops! Something went wrong 😞');
+            setDisabled(false);
+        });
     }
 
     return (

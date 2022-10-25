@@ -10,6 +10,7 @@ import Follow from "./Follow";
 export default function UserProfile() {
   const params = useParams();
   const navigate = useNavigate();
+  const userId = localStorage.getItem("linkr-userId");
 
   const [user, setUser] = useState([]);
   const [posts, setPosts] = useState([]);
@@ -34,6 +35,7 @@ export default function UserProfile() {
 
   }, [params.id, newPost, setPosts]);  
 
+  console.log( userId, user)
   return ( 
     <>
       {user.length === 0 ? (
@@ -63,7 +65,7 @@ export default function UserProfile() {
           </LeftSection>
 
           <RightSection>
-            <Follow/>
+            { user.id == userId ? <></> : <Follow/>}
           </RightSection>
         </Page>
       )}
