@@ -56,8 +56,12 @@ export default function UserProfile() {
                 <ContainerHiCircle /> :
                 <ProfilePicture img={user.img} />
               }
-              <Title>{user.name}'s posts</Title> 
+
+              <Title>{user.name}'s posts</Title>
             </UserInfos>
+
+            <div className="follow"><Follow/></div>
+
             <Posts
               newPost={newPost}
               setNewPost={setNewPost}
@@ -66,8 +70,11 @@ export default function UserProfile() {
           </LeftSection>
 
           <RightSection>
+
             { user.id == userId ? <BlankSpace/> : <Follow/>}
+
             <Trending />
+
           </RightSection>
         </Page>
       )}
@@ -91,7 +98,7 @@ const Page = styled.div`
     color: white;
 
     @media (max-width: 800px) {
-        margin: 15vh 0;
+        margin: 12vh 0;
     }
 `;
 
@@ -99,6 +106,18 @@ const LeftSection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  .follow {   
+    width: 80vw;
+    align-self: flex-start;
+    margin: 3vh 2vw;
+  }
+
+  @media (min-width: 800px) {
+    .follow {
+      display: none;
+    }
+  }
 `;
 
 const UserInfos = styled.div`
@@ -109,8 +128,9 @@ const UserInfos = styled.div`
 
   @media (max-width: 600px) {
     width: 98vw;
-    padding: 40px 2vw;
+    padding: 0 2vw;
   }
+
 `;
 
 const ProfilePicture = styled.div`
@@ -128,8 +148,13 @@ const Title = styled.h1`
   font-weight: 700;
   font-size: 43px;
   color: #ffffff;
+  word-break: break-all;
 
   margin-left: 20px;
+
+  @media (max-width: 800px) {
+    width: 75vw;
+  }
 `;
 
 const RightSection = styled.div`
@@ -141,6 +166,10 @@ const RightSection = styled.div`
 
   button {
     margin: 50px 0;
+  }
+
+  @media (max-width: 800px) {
+    display: none;
   }
 `;
 
