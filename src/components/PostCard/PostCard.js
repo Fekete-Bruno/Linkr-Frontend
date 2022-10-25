@@ -6,6 +6,8 @@ import {
   ContainerHiCircle,
 } from "../../Styles/Icons";
 import { HiTrash, HiPencil } from "react-icons/hi";
+import { AiOutlineComment } from "react-icons/ai";
+import { BiRepost } from "react-icons/bi";
 import Microlink from "@microlink/react";
 import styled from "styled-components";
 import DeleteModal from "../Modals/DeleteModal";
@@ -48,10 +50,10 @@ export default function PostCard({
       } else if (noUser.length > 1) {
         setLikeMessage(
           "You ," +
-            noUser[0].name +
-            " and other " +
-            Number(likes - 2) +
-            " users"
+          noUser[0].name +
+          " and other " +
+          Number(likes - 2) +
+          " users"
         );
       }
     } else {
@@ -64,11 +66,11 @@ export default function PostCard({
       } else if (noUser.length > 2) {
         setLikeMessage(
           noUser[0].name +
-            ", " +
-            noUser[1].name +
-            " and other " +
-            Number(likes - 2) +
-            " users"
+          ", " +
+          noUser[1].name +
+          " and other " +
+          Number(likes - 2) +
+          " users"
         );
       }
     }
@@ -129,6 +131,18 @@ export default function PostCard({
             {likes}
             <ReactTooltip place="left" />
           </span>
+
+          <Comments onClick={() => { console.log('aaaaaaa') }}>
+            <AiOutlineComment />
+          </Comments>
+          <Text><h1>X {/* comments */}</h1></Text>
+
+
+          <Reposts onClick={() => { console.log('aaaaaaa') }}>
+            <BiRepost />
+          </Reposts>
+          <Text><h1>X {/* reposts */}</h1></Text>
+
         </div>
         <div className="right">
           <div>
@@ -192,4 +206,25 @@ const Links = styled(Microlink)`
     background-color: #171717;
     filter: brightness(120%);
   }
+`;
+
+const Comments = styled(AiOutlineComment)`
+  transform: scale(2);
+  margin-top: 20px;
+`;
+
+const Text = styled.span`
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  text-align: center;
+  color: #FFFFFF;
+  margin-top: 12px;
+`;
+
+const Reposts = styled(BiRepost)`
+  transform: scale(2);
+  margin-top: 20px;
 `;
