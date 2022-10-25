@@ -69,6 +69,24 @@ function postLikes(body){
   return request;
 }
 
+function confirmFollow(id) {
+  const config = createHeaders();
+  const request = axios.get(`${BASE_URL}/followed/${id}`, config);
+  return request;
+}
+
+function followUser(id, body){
+  const config = createHeaders();
+  const request = axios.post(`${BASE_URL}/follow/${id}`, body, config);
+  return request;
+}
+
+function unfollowUser(id) {
+  const config = createHeaders();
+  const request = axios.delete(`${BASE_URL}/unfollow/${id}`,config);
+  return request;
+}
+
 export {
   createHeaders,
   getUserInfos,
@@ -80,4 +98,7 @@ export {
   editPost,
   deletePost,
   postLikes,
+  confirmFollow,
+  followUser,
+  unfollowUser
 };
