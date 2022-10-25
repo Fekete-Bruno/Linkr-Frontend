@@ -72,13 +72,26 @@ const Wraped = styled.button`
     border-radius: 5px;
   }
 
+  &.unfollow {
+    width: 112px;
+    height: 31px;
+    font-family: Lato, sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    border-radius: 5px;
+    color: #1877F2;
+    background-color: #ffffff;
+  }
+
   &:hover{
     cursor: pointer;
     opacity: 0.9;
   }
 
   &:active{
-    transform: translateY(3px);
+    transform: scale(0.98);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
   }
 
   @media (max-width: 400px) {
@@ -88,7 +101,7 @@ const Wraped = styled.button`
       font-size: 22px;
       line-height: 33px;
     }
-
+ 
     &.post {
       height: 22px;
       font-size: 13px;
