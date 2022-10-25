@@ -75,7 +75,7 @@ const UserInfos = styled.div`
 
   @media (max-width: 600px) {
     width: 98vw;
-    padding: 40px 0;
+    padding: 40px 2vw;
   }
 `;
 
