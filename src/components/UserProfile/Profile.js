@@ -6,6 +6,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getUserInfos, getUserPosts } from "../../Common/Service";
 import Posts from "./Posts";
 import Follow from "./Follow";
+import Trending from "../Trending/Trending";
 
 export default function UserProfile() {
   const params = useParams();
@@ -65,7 +66,8 @@ export default function UserProfile() {
           </LeftSection>
 
           <RightSection>
-            { user.id == userId ? <></> : <Follow/>}
+            { user.id == userId ? <BlankSpace/> : <Follow/>}
+            <Trending />
           </RightSection>
         </Page>
       )}
@@ -85,6 +87,7 @@ const Page = styled.div`
     max-width: 100vw;
     margin:15vh 15vw;
     display: flex;
+    justify-content: center;
     color: white;
 
     @media (max-width: 800px) {
@@ -140,3 +143,7 @@ const RightSection = styled.div`
     margin: 50px 0;
   }
 `;
+
+const BlankSpace = styled.div`
+  height: 130px;
+`
