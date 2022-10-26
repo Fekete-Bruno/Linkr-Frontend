@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { BiRefresh } from "react-icons/bi";
 import useInterval from "react-useinterval";
 import styled from "styled-components";
 import PostForm from "../components/PostForm/PostForm";
@@ -9,7 +10,7 @@ import Trending from '../components/Trending/Trending';
 export default function Feed({ type, name, get, newPost, setNewPost }) {
     
     const [posts, setPosts] = useState([]);
-    let newposts = [];
+    const [updatePosts,setUpdatePosts] = useState([]);
 
     useEffect(() => {
         const promise = get(name);
@@ -24,9 +25,9 @@ export default function Feed({ type, name, get, newPost, setNewPost }) {
         const promise = get(name);
         promise.then((res => {
             let oldPostsIds = posts.map(post => post.postId);
-            newposts = res.data.filter((post)=>{
+            setUpdatePosts(res.data.filter((post)=>{
                 return !oldPostsIds.includes(post.postId)
-              });
+              }));
         })).catch((error)=>{
             console.error(error);
         });
@@ -34,11 +35,13 @@ export default function Feed({ type, name, get, newPost, setNewPost }) {
 
     function addNewPosts(){
         console.log('Add new posts...');
-        const temp = [...newposts,...posts];
+        const temp = [...updatePosts,...posts];
+        setUpdatePosts([]);
         setPosts([...temp]);
     }
 
-    useInterval(getNewPosts,15000);
+    const UPDATE_TIMER = 15000;
+    useInterval(getNewPosts,UPDATE_TIMER);
     
     return (
         <Page>
@@ -57,10 +60,11 @@ export default function Feed({ type, name, get, newPost, setNewPost }) {
                     {type === "hashtag" ? 
                         ""
                         :
-                        <>
                         <PostForm newPost={newPost} setNewPost={setNewPost} />
-                        <div onClick={addNewPosts}>NEW POSTS BUTTON</div>
-                        </>
+                    }
+                    {
+                        updatePosts.length===0 ? "" :
+                        <UpdatePostsButton onClick={addNewPosts}>{updatePosts.length} new posts, load more! <Refresh /></UpdatePostsButton>
                     }
                     <PostContainer posts={posts} newPost={newPost} setNewPost={setNewPost} />
                 </div>
@@ -121,4 +125,31 @@ const FeedTitle = styled.div`
         margin: 2vh 2vh;
     }
     
+`;
+
+const UpdatePostsButton = styled.div`
+    background-color: rgb(46,132,243);
+    margin: 2vh;
+    height:6vh;
+    font-size: 2vh;
+    border-radius: 12px;
+    font-weight: bold;
+    font-family: 'Oswald';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover{
+        cursor: pointer;
+        opacity: 0.9;
+    }
+
+    &:active{
+        transform: translateY(3px);
+    }
+`;
+
+const Refresh = styled(BiRefresh)`
+    font-size:3vh;
+    margin: 1vh;
 `;
