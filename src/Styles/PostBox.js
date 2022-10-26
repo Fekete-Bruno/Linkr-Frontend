@@ -12,6 +12,8 @@ const PostBox = styled.div`
   font-style: normal;
   color: #ffffff;
 
+  z-index: 1;
+
   @media (max-width: 600px) {
     width: 100vw;
     border-radius: 0;

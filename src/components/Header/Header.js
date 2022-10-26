@@ -124,7 +124,7 @@ const Wraped = styled.header`
   color: #ffffff;
   position: fixed;
   top: 0;
-  z-index: 1;
+  z-index: 2;
 
   h1 {
     font-family: "Passion One";
