@@ -60,7 +60,7 @@ export default function UserProfile() {
               <Title>{user.name}'s posts</Title>
             </UserInfos>
 
-            <div className="follow"><Follow/></div>
+            { user.id == userId ? <></> : <div className="hidden"><Follow/></div>}
 
             <Posts
               newPost={newPost}
@@ -107,14 +107,14 @@ const LeftSection = styled.div`
   flex-direction: column;
   align-items: center;
 
-  .follow {   
+  .hidden {   
     width: 80vw;
     align-self: flex-start;
     margin: 3vh 2vw;
   }
 
   @media (min-width: 800px) {
-    .follow {
+    .hidden {
       display: none;
     }
   }
@@ -128,7 +128,7 @@ const UserInfos = styled.div`
 
   @media (max-width: 600px) {
     width: 98vw;
-    padding: 0 2vw;
+    padding: 5vh 2vw;
   }
 
 `;

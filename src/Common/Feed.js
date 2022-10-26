@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { BiRefresh } from "react-icons/bi";
+import useInterval from "react-useinterval";
 import styled from "styled-components";
 import PostForm from "../components/PostForm/PostForm";
 import PostContainer from "../components/PostsContainer/PostsContainer";
@@ -8,13 +10,38 @@ import Trending from '../components/Trending/Trending';
 export default function Feed({ type, name, get, newPost, setNewPost }) {
     
     const [posts, setPosts] = useState([]);
+    const [updatePosts,setUpdatePosts] = useState([]);
 
     useEffect(() => {
         const promise = get(name);
         promise.then((res => {
             setPosts(res.data);
-        }));
+        })).catch(()=>{
+            alert("An error occured while trying to fetch the posts, please refresh the page");
+        });
     }, [newPost, setPosts]);
+
+    function getNewPosts(){
+        const promise = get(name);
+        promise.then((res => {
+            let oldPostsIds = posts.map(post => post.postId);
+            setUpdatePosts(res.data.filter((post)=>{
+                return !oldPostsIds.includes(post.postId)
+              }));
+        })).catch((error)=>{
+            console.error(error);
+        });
+    }
+
+    function addNewPosts(){
+        console.log('Add new posts...');
+        const temp = [...updatePosts,...posts];
+        setUpdatePosts([]);
+        setPosts([...temp]);
+    }
+
+    const UPDATE_TIMER = 15000;
+    useInterval(getNewPosts,UPDATE_TIMER);
     
     return (
         <Page>
@@ -35,7 +62,15 @@ export default function Feed({ type, name, get, newPost, setNewPost }) {
                         :
                         <PostForm newPost={newPost} setNewPost={setNewPost} />
                     }
-                    <PostContainer posts={posts} newPost={newPost} setNewPost={setNewPost} />
+                    {
+                        updatePosts.length===0 ? "" :
+                        <UpdatePostsButton onClick={addNewPosts}>{updatePosts.length} new posts, load more! <Refresh /></UpdatePostsButton>
+                    }
+                    {
+                        posts.length === 0 ? 
+                        <Message>No posts found from your friends 😞</Message> :
+                        <PostContainer posts={posts} newPost={newPost} setNewPost={setNewPost} />
+                    }
                 </div>
 
 
@@ -69,6 +104,22 @@ const Page = styled.div`
     }
 `;
 
+const Message = styled.div`
+  width: 661px;
+  padding: 40px;
+  font-family: "Lato";
+  font-style: normal;
+  font-size: 30px;
+  font-weight: 500;
+  color: #ffffff;
+  opacity: 0.9;
+  
+  @media (max-width: 600px) {
+    width: 98vw;
+    padding: 2vw;
+  }
+`;
+
 const Content = styled.div`
     display: flex;
     justify-content: space-between;
@@ -94,4 +145,31 @@ const FeedTitle = styled.div`
         margin: 2vh 2vh;
     }
     
+`;
+
+const UpdatePostsButton = styled.div`
+    background-color: rgb(46,132,243);
+    margin: 2vh;
+    height:6vh;
+    font-size: 2vh;
+    border-radius: 12px;
+    font-weight: bold;
+    font-family: 'Oswald';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover{
+        cursor: pointer;
+        opacity: 0.9;
+    }
+
+    &:active{
+        transform: translateY(3px);
+    }
+`;
+
+const Refresh = styled(BiRefresh)`
+    font-size:3vh;
+    margin: 1vh;
 `;

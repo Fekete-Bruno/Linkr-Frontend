@@ -63,7 +63,7 @@ export default function Follow() {
                 </Button>
             ):(
                 <Button 
-                    className="post" 
+                    className="follow" 
                     disabled={disabled}
                     onClick={() => follow()}
                 >

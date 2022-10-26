@@ -40,7 +40,7 @@ const Wraped = styled.button`
     border-radius: 6px;
   }
 
-  &.post {
+  &.post, &.follow {
     width: 112px;
     height: 31px;
     font-family: Lato, sans-serif;

@@ -7,6 +7,7 @@ import ProfilePicture from "../../Styles/ProfilePicture";
 export default function SearchResults ({users, hidden, setHidden}) {
 
     const navigate = useNavigate();
+    const userId = localStorage.getItem("linkr-userId");
 
     function redirectToProfilePage (id) {
         navigate(`/user/${id}`);
@@ -39,14 +40,24 @@ export default function SearchResults ({users, hidden, setHidden}) {
                                         onClick = {() => {
                                             redirectToProfilePage(user.id)
                                         }}
-                                />
+                                    />
                                 }    
                                 <UserName 
                                     onClick = {() => {
                                         redirectToProfilePage(user.id)
                                 }}>
-                                {user.name}
+                                    {user.name}
                                 </UserName>
+                                {
+                                    user.following ? 
+                                    <FollowStatus>• following</FollowStatus> :
+                                    <>
+                                        {user.id == userId ? 
+                                        <FollowStatus>• you</FollowStatus>:
+                                        <></>
+                                        }
+                                    </>
+                                }                                
                             </UserBox>
                         ))}
                     </>
@@ -85,7 +96,8 @@ const UserBox = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-`
+`;
+
 const UserName = styled.div`
     margin-left: 10px;
     font-family: 'Lato';
@@ -94,7 +106,18 @@ const UserName = styled.div`
     font-size: 19px;
     line-height: 23px;
     color: #515151;
-    cursor: pointer;`
+    cursor: pointer;
+`;
+
+const FollowStatus = styled.div`
+    margin-left: 7px;
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 23px;
+    color: #C5C5C5;
+`;
 
 const LoaderBox = styled.div`
     width: 100%;
