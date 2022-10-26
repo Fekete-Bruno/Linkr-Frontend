@@ -21,32 +21,36 @@ import ReactTooltip from "react-tooltip";
 import axios from "axios";
 
 function CommentJSX({ followedId, name, img, comment }) {
-  const [following, setFollowing] = useState('');
+  const [following, setFollowing] = useState("");
 
   let userId = localStorage.getItem("linkr-userId");
   userId = Number(userId);
 
   const body = {
     followerId: userId,
-    followedId: followedId
-  }
+    followedId: followedId,
+  };
 
   let token = localStorage.getItem("token");
   token = JSON.parse(token);
   token = token.token;
   const config = {
     headers: {
-      Authorization: `Bearer ${token}`
-    }
+      Authorization: `Bearer ${token}`,
+    },
   };
 
-  const checkIfFollows = axios.post(process.env.REACT_APP_API_BASE_URL + '/checkiffollows', body, config);
+  const checkIfFollows = axios.post(
+    process.env.REACT_APP_API_BASE_URL + "/checkiffollows",
+    body,
+    config
+  );
 
   checkIfFollows.then((answer) => {
     if (answer.data === true) {
-      setFollowing('• following');
+      setFollowing("• following");
     } else if (userId === followedId) {
-      setFollowing('• post’s author');
+      setFollowing("• post's author");
     }
   });
 
@@ -57,7 +61,13 @@ function CommentJSX({ followedId, name, img, comment }) {
   return (
     <>
       <div className="containerAvatarComment">
-        <div className="avatar">{img === null ? <ContainerHiUserCircle /> : <img src={img} alt="avatar" />}</div>
+        <div className="avatar">
+          {img === null ? (
+            <ContainerHiUserCircle />
+          ) : (
+            <img src={img} alt="avatar" />
+          )}
+        </div>
 
         <div className="containerNameComment">
           <div className="name">
@@ -74,7 +84,7 @@ function CommentJSX({ followedId, name, img, comment }) {
       <div className="grayLine"></div>
     </>
   );
-};
+}
 
 export default function PostCard({
   postId,
@@ -99,7 +109,7 @@ export default function PostCard({
   );
   const [likeMessage, setLikeMessage] = useState("");
   const [comments, setComments] = useState([]);
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState("");
   const [commentsNumber, setCommentsNumber] = useState(0);
   const [commentBox, setCommentBox] = useState(false);
   const [refresh, setRefresh] = useState(false);
@@ -114,10 +124,10 @@ export default function PostCard({
       } else if (noUser.length > 1) {
         setLikeMessage(
           "You ," +
-          noUser[0].name +
-          " and other " +
-          Number(likes - 2) +
-          " users"
+            noUser[0].name +
+            " and other " +
+            Number(likes - 2) +
+            " users"
         );
       }
     } else {
@@ -130,11 +140,11 @@ export default function PostCard({
       } else if (noUser.length > 2) {
         setLikeMessage(
           noUser[0].name +
-          ", " +
-          noUser[1].name +
-          " and other " +
-          Number(likes - 2) +
-          " users"
+            ", " +
+            noUser[1].name +
+            " and other " +
+            Number(likes - 2) +
+            " users"
         );
       }
     }
@@ -172,15 +182,18 @@ export default function PostCard({
     token = token.token;
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     };
 
-    const getComments = axios.get(process.env.REACT_APP_API_BASE_URL + '/comments/' + postId, config);
+    const getComments = axios.get(
+      process.env.REACT_APP_API_BASE_URL + "/comments/" + postId,
+      config
+    );
 
     getComments.then((answer) => {
       setComments(answer.data);
-      setCommentsNumber((answer.data).length);
+      setCommentsNumber(answer.data.length);
     });
 
     getComments.catch((error) => {
@@ -196,29 +209,33 @@ export default function PostCard({
     const body = {
       userId: userId,
       postId: postId,
-      comment: comment
-    }
+      comment: comment,
+    };
 
     let token = localStorage.getItem("token");
     token = JSON.parse(token);
     token = token.token;
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     };
 
-    const postComment = axios.post(process.env.REACT_APP_API_BASE_URL + '/comment', body, config);
+    const postComment = axios.post(
+      process.env.REACT_APP_API_BASE_URL + "/comment",
+      body,
+      config
+    );
 
     postComment.then(() => {
-      setComment('');
+      setComment("");
       setRefresh(!refresh);
     });
 
     postComment.catch((error) => {
       console.log(error);
     });
-  };
+  }
 
   return (
     <Wraped>
@@ -255,17 +272,29 @@ export default function PostCard({
             <ReactTooltip place="left" />
           </span>
 
-          <Comments onClick={() => { setCommentBox(!commentBox) }}>
+          <Comments
+            onClick={() => {
+              setCommentBox(!commentBox);
+            }}
+          >
             <AiOutlineComment />
           </Comments>
-          <Text><h1>{commentsNumber} {/* comments */}</h1></Text>
+          <Text>
+            <h1>
+              {commentsNumber} {/* comments */}
+            </h1>
+          </Text>
 
-
-          <Reposts onClick={() => { console.log('aaaaaaa') }}>
+          <Reposts
+            onClick={() => {
+              alert("aaaaaaa");
+            }}
+          >
             <BiRepost />
           </Reposts>
-          <Text><h1>X {/* reposts */}</h1></Text>
-
+          <Text>
+            <h1>X {/* reposts */}</h1>
+          </Text>
         </div>
         <div className="right">
           <div>
@@ -316,14 +345,36 @@ export default function PostCard({
       </PostBox>
 
       <CommentsDropDown>
-        <div className={`dropdown-menu ${commentBox ? 'active' : 'inactive'}`}>
+        <div className={`dropdown-menu ${commentBox ? "active" : "inactive"}`}>
           <CommentBox>
-            {comments.map((comment, key) => <CommentJSX key={key} followedId={comment.userId} name={comment.name} img={comment.img} comment={comment.comment} />)}
+            {comments.map((comment, key) => (
+              <CommentJSX
+                key={key}
+                followedId={comment.userId}
+                name={comment.name}
+                img={comment.img}
+                comment={comment.comment}
+              />
+            ))}
 
             <FormComment onSubmit={sendComment}>
-              {img === localStorage.getItem("img") ? <ContainerHiUserCircle /> : <img src={localStorage.getItem("img")} alt='' />}
-              <input type="text" id="comment" placeholder="Write a comment..." value={comment} onChange={(e) => { setComment(e.target.value) }}></input>
-              <button type="submit" className="button"><ContainerFiSend /></button>
+              {img === localStorage.getItem("img") ? (
+                <ContainerHiUserCircle />
+              ) : (
+                <img src={localStorage.getItem("img")} alt="" />
+              )}
+              <input
+                type="text"
+                id="comment"
+                placeholder="Write a comment..."
+                value={comment}
+                onChange={(e) => {
+                  setComment(e.target.value);
+                }}
+              ></input>
+              <button type="submit" className="button">
+                <ContainerFiSend />
+              </button>
             </FormComment>
           </CommentBox>
         </div>
@@ -355,13 +406,13 @@ const Comments = styled(AiOutlineComment)`
 `;
 
 const Text = styled.span`
-  font-family: 'Lato';
+  font-family: "Lato";
   font-style: normal;
   font-weight: 400;
   font-size: 11px;
   line-height: 13px;
   text-align: center;
-  color: #FFFFFF;
+  color: #ffffff;
   margin-top: 12px;
 `;
 
@@ -391,67 +442,66 @@ const CommentBox = styled.div`
   display: flex;
   flex-direction: column;
   width: 611px;
-  background: #1E1E1E;
+  background: red;
   border-radius: 16px;
   margin: -50px 0px 24px 0px;
   padding: 50px 0px 24px 24px;
 
-    .containerAvatarComment {
-      display: flex;
-      margin-top: 12px;
-    }
+  .containerAvatarComment {
+    display: flex;
+    margin-top: 12px;
+  }
 
-    img {
-      width: 39px;
-      height: 39px;
-      border-radius: 26.5px;
-    }
+  img {
+    width: 39px;
+    height: 39px;
+    border-radius: 26.5px;
+  }
 
+  .containerNameComment {
+    margin-left: 18px;
+  }
 
-    .containerNameComment{
-      margin-left: 18px;
-    }
+  .name {
+    display: flex;
+  }
 
-    .name {
-      display: flex;
-    }
+  .name h1 {
+    font-family: "Lato";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    color: #f3f3f3;
+    margin-right: 4px;
+  }
 
-    .name h1 {
-      font-family: 'Lato';
-      font-style: normal;
-      font-weight: 700;
-      font-size: 14px;
-      line-height: 17px;
-      color: #F3F3F3;
-      margin-right: 4px;
-    }
+  .name h2 {
+    font-family: "Lato";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #565656;
+  }
 
-    .name h2 {
-      font-family: 'Lato';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 17px;
-      color: #565656;
-    }
+  .comment h1 {
+    font-family: "Lato";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #acacac;
+    margin-top: 4px;
+  }
 
-    .comment h1{
-      font-family: 'Lato';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 17px;
-      color: #ACACAC;
-      margin-top: 4px;
-    }
-
-    .grayLine {
-      width: 571px;
-      height: 1px;
-      border: 1px solid #353535;
-      transform: rotate(-0.1deg);
-      margin-top: 18px;
-    }
+  .grayLine {
+    width: 571px;
+    height: 1px;
+    border: 1px solid #353535;
+    transform: rotate(-0.1deg);
+    margin-top: 18px;
+  }
 `;
 
 const FormComment = styled.form`
@@ -461,30 +511,29 @@ const FormComment = styled.form`
   margin-top: 18px;
   //z-index: 1;
 
-    input[type="text"] {
-      width: 510px;
-      height: 39px;
-      background: #252525;
-      border-radius: 8px;
-      border: none;
-      margin-left: 12px;
+  input[type="text"] {
+    width: 510px;
+    height: 39px;
+    background: #252525;
+    border-radius: 8px;
+    border: none;
+    margin-left: 12px;
 
-      font-family: 'Lato';
-      font-style: italic;
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 17px;
-      letter-spacing: 0.05em;
-      color: #575757;
-      padding-left: 12px;
-    }
+    font-family: "Lato";
+    font-style: italic;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: 0.05em;
+    color: #575757;
+    padding-left: 12px;
+  }
 
-    .button {
-      //visibility: hidden;
-      border: 0; 
-      background: transparent;
-    }
-
+  .button {
+    //visibility: hidden;
+    border: 0;
+    background: transparent;
+  }
 `;
 
 const ContainerHiUserCircle = styled(HiUserCircle)`
@@ -495,7 +544,7 @@ const ContainerHiUserCircle = styled(HiUserCircle)`
 const ContainerFiSend = styled(FiSend)`
   width: 24px;
   height: 24px;
-  color: #F3F3F3;
+  color: #f3f3f3;
   margin-left: -50px;
 `;
 
