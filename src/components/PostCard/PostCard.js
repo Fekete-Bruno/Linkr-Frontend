@@ -321,7 +321,7 @@ export default function PostCard({
             {comments.map((comment, key) => <CommentJSX key={key} followedId={comment.userId} name={comment.name} img={comment.img} comment={comment.comment} />)}
 
             <FormComment onSubmit={sendComment}>
-              {img === localStorage.getItem("img") ? <img src={localStorage.getItem("img")} alt='' /> : <ContainerHiUserCircle /> }
+              {img === localStorage.getItem("img") ? <img src={localStorage.getItem("img")} alt='' /> : <ContainerHiUserCircle />}
               <input type="text" id="comment" placeholder="Write a comment..." value={comment} onChange={(e) => { setComment(e.target.value) }}></input>
               <button type="submit" className="button"><ContainerFiSend /></button>
             </FormComment>
@@ -375,6 +375,11 @@ const CommentsDropDown = styled.div`
     visibility: hidden;
     display: none;
     margin-top: 0px;
+  }
+
+  @media (max-width: 600px) {
+    width: 100vw;
+    border-radius: 0;
   }
 `;
 
@@ -443,6 +448,11 @@ const CommentBox = styled.div`
       transform: rotate(-0.1deg);
       margin-top: 18px;
     }
+
+    @media (max-width: 600px) {
+    width: 100vw;
+    border-radius: 0;
+  }
 `;
 
 const FormComment = styled.form`
