@@ -1,86 +1,19 @@
-import { useEffect, useState } from "react";
-import styled from "styled-components";
+import { useState } from 'react';
+import Feed from "../../Common/Feed";
 import { getPosts } from "../../Common/Service";
-import PostForm from "../PostForm/PostForm";
-import PostContainer from "../PostsContainer/PostsContainer";
-import SearchBar from "../SearchBar/Search";
 
 export default function Timeline() {
-    const [posts, setPosts] = useState([]);
     const [newPost, setNewPost] = useState(false);
 
-    useEffect(() => {
-        const promise = getPosts();
-        promise.then((res => {
-            setPosts(res.data);
-        }));
-    }, [newPost, setPosts]);
+    const get = getPosts;
+
     return (
-        <Page>
-
-            <div className="searchBar">
-                <SearchBar />
-            </div>
-
-            <TimelineTitle>timeline</TimelineTitle>
-
-            <Content>
-
-                <div>
-                    <PostForm newPost={newPost} setNewPost={setNewPost} />
-                    <PostContainer posts={posts} newPost={newPost} setNewPost={setNewPost}/>
-                </div>
-
-
-                <div className="trending">Trending column COMING SOON...</div>
-
-
-            </Content>
-        </Page>
-
+        <Feed
+            type = "timeline"
+            name = ""
+            get = {get}
+            newPost = {newPost}
+            setNewPost = {setNewPost}
+        />
     );
 }
-
-const Page = styled.div`
-    max-width: 100vw;
-    margin:15vh 15vw;
-    display: flex;
-    flex-direction: column;
-    color: white;
-
-    @media (max-width: 800px) {
-        margin: 15vh 0;
-    }
-
-    .searchBar {
-        margin-bottom: 6vh;
-        @media (min-width: 600px) {
-            display: none;
-        }
-    }
-`;
-
-const Content = styled.div`
-    display: flex;
-    justify-content: space-between;
-
-    .trending {
-        @media (max-width: 800px) {
-            display: none;
-        }
-    }
-`;
-
-const TimelineTitle = styled.div`
-    margin: 2vh 0;
-    font-family: 'Oswald';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 43px;
-    line-height: 64px;
-
-    @media (max-width: 800px) {
-        margin: 2vh 2vh;
-    }
-    
-`;

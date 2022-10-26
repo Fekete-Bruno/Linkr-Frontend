@@ -21,6 +21,18 @@ import ReactTooltip from "react-tooltip";
 import axios from "axios";
 
 function CommentJSX({ followedId, name, img, comment }) {
+  /* const [follows, setFollows] = useState('');
+
+  console.log(following);
+
+  if (following === true) {
+    if (localStorage.getItem("linkr-userId") === followedId) {
+      setFollows('Author');
+    } else {
+      setFollows('Follows');
+    }
+  } */
+
   const [following, setFollowing] = useState("");
 
   let userId = localStorage.getItem("linkr-userId");
@@ -177,6 +189,11 @@ export default function PostCard({
   }, [refresh]);
 
   function handleComments() {
+    const body = {
+      userId: localStorage.getItem("linkr-userId"),
+      postId: postId,
+    };
+
     let token = localStorage.getItem("token");
     token = JSON.parse(token);
     token = token.token;
@@ -186,14 +203,17 @@ export default function PostCard({
       },
     };
 
-    const getComments = axios.get(
-      process.env.REACT_APP_API_BASE_URL + "/comments/" + postId,
+    const getComments = axios.post(
+      process.env.REACT_APP_API_BASE_URL + "/getcommentsv2",
+      body,
       config
     );
 
     getComments.then((answer) => {
       setComments(answer.data);
       setCommentsNumber(answer.data.length);
+      console.log(body);
+      //console.log(answer.data);
     });
 
     getComments.catch((error) => {
@@ -238,7 +258,7 @@ export default function PostCard({
   }
 
   return (
-    <Wraped>
+    <>
       {modalOpen ? (
         <DeleteModal
           closeModal={() => setModalOpen(false)}
@@ -354,14 +374,15 @@ export default function PostCard({
                 name={comment.name}
                 img={comment.img}
                 comment={comment.comment}
+                following={comment.following}
               />
             ))}
 
             <FormComment onSubmit={sendComment}>
               {img === localStorage.getItem("img") ? (
-                <ContainerHiUserCircle />
-              ) : (
                 <img src={localStorage.getItem("img")} alt="" />
+              ) : (
+                <ContainerHiUserCircle />
               )}
               <input
                 type="text"
@@ -379,13 +400,9 @@ export default function PostCard({
           </CommentBox>
         </div>
       </CommentsDropDown>
-    </Wraped>
+    </>
   );
 }
-
-const Wraped = styled.div`
-  position: relative;
-`;
 
 const Links = styled(Microlink)`
   width: 100%;
@@ -403,6 +420,7 @@ const Links = styled(Microlink)`
 const Comments = styled(AiOutlineComment)`
   transform: scale(2);
   margin-top: 20px;
+  cursor: pointer;
 `;
 
 const Text = styled.span`
@@ -417,24 +435,23 @@ const Text = styled.span`
 `;
 
 const CommentsDropDown = styled.div`
-  //position: absolute;
-  //top: 0;
-  //z-index: -1;
+  z-index: 0;
 
   .dropdown-menu.active {
     opacity: 1;
     visibility: visible;
-    //transform: translateY(0);
-    //transition: var(500ms) ease;
   }
 
   .dropdown-menu.inactive {
     opacity: 0;
     visibility: hidden;
     display: none;
-    //transform: translateY(-20px);
-    //transition: var(500ms) ease;
     margin-top: 0px;
+  }
+
+  @media (max-width: 600px) {
+    width: 100vw;
+    border-radius: 0;
   }
 `;
 
@@ -502,6 +519,11 @@ const CommentBox = styled.div`
     transform: rotate(-0.1deg);
     margin-top: 18px;
   }
+
+  @media (max-width: 600px) {
+    width: 100vw;
+    border-radius: 0;
+  }
 `;
 
 const FormComment = styled.form`
@@ -539,6 +561,7 @@ const FormComment = styled.form`
 const ContainerHiUserCircle = styled(HiUserCircle)`
   width: 39px;
   height: 39px;
+  cursor: pointer;
 `;
 
 const ContainerFiSend = styled(FiSend)`
@@ -546,9 +569,11 @@ const ContainerFiSend = styled(FiSend)`
   height: 24px;
   color: #f3f3f3;
   margin-left: -50px;
+  cursor: pointer;
 `;
 
 const Reposts = styled(BiRepost)`
   transform: scale(2);
   margin-top: 20px;
+  cursor: pointer;
 `;
