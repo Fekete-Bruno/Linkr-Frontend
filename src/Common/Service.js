@@ -93,6 +93,12 @@ function getHashtags() {
   return request;
 }
 
+function getPostsByHashtag(hashtag) {
+  const config = createHeaders();
+  const request = axios.get(`${BASE_URL}/hashtags/${hashtag}`, config);
+  return request;
+}
+
 export {
   createHeaders,
   getUserInfos,
@@ -107,5 +113,6 @@ export {
   confirmFollow,
   followUser,
   unfollowUser,
-  getHashtags
+  getHashtags,
+  getPostsByHashtag
 };
