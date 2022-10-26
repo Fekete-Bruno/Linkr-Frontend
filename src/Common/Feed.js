@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import useInterval from "react-useinterval";
 import styled from "styled-components";
 import PostForm from "../components/PostForm/PostForm";
 import PostContainer from "../components/PostsContainer/PostsContainer";
@@ -8,13 +9,36 @@ import Trending from '../components/Trending/Trending';
 export default function Feed({ type, name, get, newPost, setNewPost }) {
     
     const [posts, setPosts] = useState([]);
+    let newposts = [];
 
     useEffect(() => {
         const promise = get(name);
         promise.then((res => {
             setPosts(res.data);
-        }));
+        })).catch(()=>{
+            alert("An error occured while trying to fetch the posts, please refresh the page");
+        });
     }, [newPost, setPosts]);
+
+    function getNewPosts(){
+        const promise = get(name);
+        promise.then((res => {
+            let oldPostsIds = posts.map(post => post.postId);
+            newposts = res.data.filter((post)=>{
+                return !oldPostsIds.includes(post.postId)
+              });
+        })).catch((error)=>{
+            console.error(error);
+        });
+    }
+
+    function addNewPosts(){
+        console.log('Add new posts...');
+        const temp = [...newposts,...posts];
+        setPosts([...temp]);
+    }
+
+    useInterval(getNewPosts,15000);
     
     return (
         <Page>
@@ -33,7 +57,10 @@ export default function Feed({ type, name, get, newPost, setNewPost }) {
                     {type === "hashtag" ? 
                         ""
                         :
+                        <>
                         <PostForm newPost={newPost} setNewPost={setNewPost} />
+                        <div onClick={addNewPosts}>NEW POSTS BUTTON</div>
+                        </>
                     }
                     <PostContainer posts={posts} newPost={newPost} setNewPost={setNewPost} />
                 </div>
