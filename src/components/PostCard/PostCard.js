@@ -21,6 +21,18 @@ import ReactTooltip from "react-tooltip";
 import axios from "axios";
 
 function CommentJSX({ followedId, name, img, comment }) {
+  /* const [follows, setFollows] = useState('');
+
+  console.log(following);
+
+  if (following === true) {
+    if (localStorage.getItem("linkr-userId") === followedId) {
+      setFollows('Author');
+    } else {
+      setFollows('Follows');
+    }
+  } */
+
   const [following, setFollowing] = useState('');
 
   let userId = localStorage.getItem("linkr-userId");
@@ -167,6 +179,11 @@ export default function PostCard({
   }, [refresh]);
 
   function handleComments() {
+    const body = {
+      userId: localStorage.getItem("linkr-userId"),
+      postId: postId
+    }
+
     let token = localStorage.getItem("token");
     token = JSON.parse(token);
     token = token.token;
@@ -176,11 +193,13 @@ export default function PostCard({
       }
     };
 
-    const getComments = axios.get(process.env.REACT_APP_API_BASE_URL + '/comments/' + postId, config);
+    const getComments = axios.post(process.env.REACT_APP_API_BASE_URL + '/getcommentsv2', body, config);
 
     getComments.then((answer) => {
       setComments(answer.data);
       setCommentsNumber((answer.data).length);
+      console.log(body);
+      //console.log(answer.data);
     });
 
     getComments.catch((error) => {
@@ -318,7 +337,7 @@ export default function PostCard({
       <CommentsDropDown>
         <div className={`dropdown-menu ${commentBox ? 'active' : 'inactive'}`}>
           <CommentBox>
-            {comments.map((comment, key) => <CommentJSX key={key} followedId={comment.userId} name={comment.name} img={comment.img} comment={comment.comment} />)}
+            {comments.map((comment, key) => <CommentJSX key={key} followedId={comment.userId} name={comment.name} img={comment.img} comment={comment.comment} following={comment.following} />)}
 
             <FormComment onSubmit={sendComment}>
               {img === localStorage.getItem("img") ? <img src={localStorage.getItem("img")} alt='' /> : <ContainerHiUserCircle />}
