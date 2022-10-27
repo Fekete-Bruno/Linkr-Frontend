@@ -69,9 +69,9 @@ function deletePost(id) {
   return request;
 }
 
-function postLikes(body){
+function postLikes(body) {
   const config = createHeaders();
-  const request = axios.post(`${BASE_URL}/like`,body,config);
+  const request = axios.post(`${BASE_URL}/like`, body, config);
   return request;
 }
 
@@ -81,7 +81,7 @@ function confirmFollow(id) {
   return request;
 }
 
-function followUser(id, body){
+function followUser(id, body) {
   const config = createHeaders();
   const request = axios.post(`${BASE_URL}/follow/${id}`, body, config);
   return request;
@@ -89,7 +89,7 @@ function followUser(id, body){
 
 function unfollowUser(id) {
   const config = createHeaders();
-  const request = axios.delete(`${BASE_URL}/unfollow/${id}`,config);
+  const request = axios.delete(`${BASE_URL}/unfollow/${id}`, config);
   return request;
 }
 
@@ -111,6 +111,12 @@ function getPostsByHashtag(hashtag) {
   return request;
 }
 
+function repostPost(id) {
+  const config = createHeaders();
+  const request = axios.delete(`${BASE_URL}/repost/${id}`, config);
+  return request;
+}
+
 export {
   createHeaders,
   getUserInfos,
@@ -128,5 +134,6 @@ export {
   unfollowUser,
   getFollows,
   getHashtags,
-  getPostsByHashtag
+  getPostsByHashtag,
+  repostPost,
 };

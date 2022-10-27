@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
-import { editPost } from "../../Common/Service";
+import { editPost, getPosts } from "../../Common/Service";
 import { ThreeCircles } from "react-loader-spinner";
 
 export default function EditDescriptionInput({
@@ -9,11 +9,12 @@ export default function EditDescriptionInput({
   editDisabled,
   setEditDisabled,
   setSelectedPost,
-  newPost,
-  setNewPost,
 }) {
   const [newDescription, setNewDescription] = useState("");
   const [inputLock, setInputLock] = useState(false);
+  const [newPost, setNewPost] = useState(false);
+  const [posts, setPosts] = useState([]);
+
   const inputRef = useRef();
 
   function keyPressed(e) {
@@ -37,10 +38,17 @@ export default function EditDescriptionInput({
         setEditDisabled(!editDisabled);
         setSelectedPost();
         setInputLock(false);
+        setNewPost(!newPost);
       })
       .catch((error) => alert(`Couldn't edit post. Error: ${error.message}`));
-    setNewPost(!newPost);
   }
+
+  useEffect(() => {
+    const promise = getPosts();
+    promise.then((res) => {
+      setPosts(res.data);
+    });
+  }, [newPost, setPosts]);
 
   useEffect(() => {
     if (inputRef.current) {

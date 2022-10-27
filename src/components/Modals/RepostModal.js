@@ -1,31 +1,31 @@
-import { ThreeCircles } from "react-loader-spinner";
 import { ModalWrapper, Background, Box } from "../../Styles/ModalStyles.js";
+import { ThreeCircles } from "react-loader-spinner";
 
-export default function DeleteModal({
+export default function RepostModal({
   closeModal,
-  confirmDelete,
-  delDisabled,
+  confirmRepost,
+  repostDisable,
 }) {
   return (
     <ModalWrapper>
       <Background />
       <Box>
-        Are you sure you want <br />
-        to delete this post?
+        Do you want to re-post <br />
+        this link?
         <div className="buttons">
-          {delDisabled ? (
+          {repostDisable ? (
             <ThreeCircles color="white" height={30} />
           ) : (
             <>
               <button className="cancel" onClick={closeModal}>
-                No, go back
+                No, cancel
               </button>
               <button
                 className="confirm"
-                onClick={confirmDelete}
-                disabled={delDisabled}
+                onClick={confirmRepost}
+                disabled={repostDisable}
               >
-                Yes, delete it
+                Yes, share!
               </button>
             </>
           )}

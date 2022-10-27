@@ -61,28 +61,4 @@ const Wrapper = styled.input`
       color: #949494;
     }
   }
-
-  @media (max-width: 400px) {
-    &.log {
-      width: 330px;
-      height: 55px;
-      font-size: 22px;
-      line-height: 33px;
-      padding: 10px 16px;
-      ::placeholder {
-        font-size: 22px;
-      }
-    }
-
-    &.post {
-      width: 345px;
-      height: 30px;
-      font-size: 13px;
-      line-height: 16px;
-      padding: 6px 10px;
-      ::placeholder {
-        font-size: 13px;
-      }
-    }
-  }
 `;
