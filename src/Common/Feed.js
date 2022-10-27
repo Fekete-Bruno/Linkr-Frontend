@@ -10,7 +10,7 @@ import InfiniteScroll from "react-infinite-scroller";
 import { ThreeCircles } from "react-loader-spinner";
 import { getPostPage } from "./Service";
 
-export default function Feed({ type, name, get, newPost, setNewPost }) {
+export default function Feed({ type, name, get, newPost, setNewPost, follows }) {
     
     const [posts, setPosts] = useState([]);
     const [updatePosts,setUpdatePosts] = useState([]);
@@ -93,7 +93,11 @@ export default function Feed({ type, name, get, newPost, setNewPost }) {
                     }
                     {
                         posts.length === 0 ? 
-                        <Message>No posts found from your friends 😞</Message> :
+                        <Message>
+                            {follows.length === 0 ? 
+                            "You don't follow anyone yet. Search for new friends! 😊": 
+                            "No posts found from your friends 😞"}
+                        </Message> :
                         <InfiniteScroll
                             loadMore={addPages}
                             loader={hasMore?<Loader><ThreeCircles color="white"/></Loader>:""}
@@ -148,6 +152,7 @@ const Message = styled.div`
   font-style: normal;
   font-size: 30px;
   font-weight: 500;
+  line-height: 35px;
   color: #ffffff;
   opacity: 0.9;
   
