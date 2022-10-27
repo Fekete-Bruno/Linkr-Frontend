@@ -107,6 +107,7 @@ export default function PostCard({
   description,
   likeArray,
   likes,
+  reposts,
   newPost,
   setNewPost,
 }) {
@@ -313,7 +314,7 @@ export default function PostCard({
             <BiRepost />
           </Reposts>
           <Text>
-            <h1>X {/* reposts */}</h1>
+            <h1>{reposts}</h1>
           </Text>
         </div>
         <div className="right">
