@@ -51,6 +51,12 @@ function getPosts() {
   return request;
 }
 
+function getPostPage(page){
+  const config = createHeaders();
+  const request = axios.get(`${BASE_URL}/timeline/${page}`,config);
+  return request;
+}
+
 function editPost(id, body) {
   const config = createHeaders();
   const request = axios.put(`${BASE_URL}/posts/${id}`, body, config);
@@ -107,6 +113,7 @@ export {
   searchUser,
   postUrls,
   getPosts,
+  getPostPage,
   editPost,
   deletePost,
   postLikes,
