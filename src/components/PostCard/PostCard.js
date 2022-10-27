@@ -20,7 +20,7 @@ import Description from "../Description/Description";
 import ReactTooltip from "react-tooltip";
 import axios from "axios";
 
-function CommentJSX({ followedId, name, img, comment }) {
+function CommentJSX({ postAuthor, name, img, comment, follow, userId }) {
   /* const [follows, setFollows] = useState('');
 
   console.log(following);
@@ -35,7 +35,19 @@ function CommentJSX({ followedId, name, img, comment }) {
 
   const [following, setFollowing] = useState("");
 
-  let userId = localStorage.getItem("linkr-userId");
+  useEffect(() => {
+    if (userId === postAuthor && follow === true) {
+      setFollowing(`• post’s author • following`);
+    } else if (userId === postAuthor) {
+      setFollowing(`• post’s author`);
+    } else if (follow === true) {
+      setFollowing("• following");
+    } else {
+      setFollowing("");
+    }
+  }, []);
+
+  /* let userId = localStorage.getItem("linkr-userId");
   userId = Number(userId);
 
   const body = {
@@ -68,7 +80,7 @@ function CommentJSX({ followedId, name, img, comment }) {
 
   checkIfFollows.catch((error) => {
     console.log(error);
-  });
+  }); */
 
   return (
     <>
@@ -213,8 +225,8 @@ export default function PostCard({
     getComments.then((answer) => {
       setComments(answer.data);
       setCommentsNumber(answer.data.length);
-      console.log(body);
-      //console.log(answer.data);
+      //console.log(body);
+      console.log(answer.data);
     });
 
     getComments.catch((error) => {
@@ -371,11 +383,12 @@ export default function PostCard({
             {comments.map((comment, key) => (
               <CommentJSX
                 key={key}
-                followedId={comment.userId}
+                postAuthor={comment.postAuthor}
                 name={comment.name}
                 img={comment.img}
                 comment={comment.comment}
-                following={comment.following}
+                follow={comment.follow}
+                userId={comment.userId}
               />
             ))}
 
