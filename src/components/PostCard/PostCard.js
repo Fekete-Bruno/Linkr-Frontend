@@ -211,7 +211,7 @@ export default function PostCard({
       setComments(answer.data);
       setCommentsNumber((answer.data).length);
       //console.log(body);
-      console.log(answer.data);
+      //console.log(answer.data);
     });
 
     getComments.catch((error) => {

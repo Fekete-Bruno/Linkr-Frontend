@@ -6,20 +6,45 @@ import PostForm from "../components/PostForm/PostForm";
 import PostContainer from "../components/PostsContainer/PostsContainer";
 import SearchBar from "../components/SearchBar/Search";
 import Trending from '../components/Trending/Trending';
+import InfiniteScroll from "react-infinite-scroller";
+import { ThreeCircles } from "react-loader-spinner";
+import { getPostPage } from "./Service";
 
 export default function Feed({ type, name, get, newPost, setNewPost }) {
     
     const [posts, setPosts] = useState([]);
     const [updatePosts,setUpdatePosts] = useState([]);
+    const [page,setPage] = useState(2);
+    const [hasMore,setHasMore] = useState(true);
 
-    useEffect(() => {
+    if(name!==""){
+        setHasMore(false);
+    }
+
+    useEffect(getStartPosts, [newPost, setPosts]);
+
+    function getStartPosts(){
         const promise = get(name);
         promise.then((res => {
             setPosts(res.data);
         })).catch(()=>{
             alert("An error occured while trying to fetch the posts, please refresh the page");
         });
-    }, [newPost, setPosts]);
+    }
+
+    function addPages(){
+        if(hasMore){
+            getPostPage(page).then(res=>{    
+                setPosts(res.data);
+                setPage(page+1);
+                if(res.data.length===posts.length){
+                    setHasMore(false);
+                }
+            }).catch((error)=>{
+                console.error(error);
+            });
+        }
+    }
 
     function getNewPosts(){
         const promise = get(name);
@@ -69,7 +94,13 @@ export default function Feed({ type, name, get, newPost, setNewPost }) {
                     {
                         posts.length === 0 ? 
                         <Message>No posts found from your friends 😞</Message> :
-                        <PostContainer posts={posts} newPost={newPost} setNewPost={setNewPost} />
+                        <InfiniteScroll
+                            loadMore={addPages}
+                            loader={hasMore?<Loader><ThreeCircles color="white"/></Loader>:""}
+                            hasMore={hasMore}
+                        >
+                            <PostContainer posts={posts} newPost={newPost} setNewPost={setNewPost} />
+                        </InfiniteScroll>
                     }
                 </div>
 
@@ -84,6 +115,12 @@ export default function Feed({ type, name, get, newPost, setNewPost }) {
 
     );
 }
+
+const Loader = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
 
 const Page = styled.div`
     max-width: 100vw;
