@@ -14,11 +14,12 @@ import styled from "styled-components";
 import DeleteModal from "../Modals/DeleteModal";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { deletePost, postLikes } from "../../Common/Service";
+import { deletePost, postLikes, repostPost } from "../../Common/Service";
 import EditDescriptionInput from "../Inputs/EditDescriptionInput";
 import Description from "../Description/Description";
 import ReactTooltip from "react-tooltip";
 import axios from "axios";
+import RepostModal from "../Modals/RepostModal";
 
 function CommentJSX({ postAuthor, name, img, comment, follow, userId }) {
   /* const [follows, setFollows] = useState('');
@@ -37,9 +38,9 @@ function CommentJSX({ postAuthor, name, img, comment, follow, userId }) {
 
   useEffect(() => {
     if (userId === postAuthor && follow === true) {
-      setFollowing(`• post’s author • following`);
+      setFollowing(`• post's author • following`);
     } else if (userId === postAuthor) {
-      setFollowing(`• post’s author`);
+      setFollowing(`• post's author`);
     } else if (follow === true) {
       setFollowing("• following");
     } else {
@@ -124,10 +125,12 @@ export default function PostCard({
   setNewPost,
 }) {
   const navigate = useNavigate();
-  const [modalOpen, setModalOpen] = useState(false);
+  const [delModalOpen, setdelModalOpen] = useState(false);
+  const [repostModalOpen, setRepostModalOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState();
   const [editDisabled, setEditDisabled] = useState(true);
   const [delDisabled, setDelDisabled] = useState(false);
+  const [repostDisable, setRepostDisable] = useState(false);
   const userId = parseInt(localStorage.getItem("linkr-userId"));
   const [liked, setLiked] = useState(
     likeArray.find((obj) => obj.userId === userId)
@@ -179,12 +182,24 @@ export default function PostCard({
     setDelDisabled(true);
     deletePost(selectedPost)
       .then(() => {
-        setModalOpen(false);
+        setdelModalOpen(false);
         setDelDisabled(false);
         setSelectedPost();
         window.location.reload(false);
       })
       .catch((error) => alert(`Couldn't delete post. Error: ${error.message}`));
+  }
+
+  function handleRepost() {
+    setRepostDisable(true);
+    repostPost(userId, selectedPost)
+      .then(() => {
+        setRepostModalOpen(false);
+        setRepostDisable(false);
+        setSelectedPost();
+        window.location.reload(false);
+      })
+      .catch((error) => alert(`Couldn't repost. Error: ${error.message}`));
   }
 
   function handleLike() {
@@ -226,7 +241,7 @@ export default function PostCard({
       setComments(answer.data);
       setCommentsNumber(answer.data.length);
       //console.log(body);
-      console.log(answer.data);
+      // console.log(answer.data);
     });
 
     getComments.catch((error) => {
@@ -272,11 +287,20 @@ export default function PostCard({
 
   return (
     <>
-      {modalOpen ? (
+      {delModalOpen ? (
         <DeleteModal
-          closeModal={() => setModalOpen(false)}
+          closeModal={() => setdelModalOpen(false)}
           confirmDelete={() => handleDelete()}
           delDisabled={delDisabled}
+        />
+      ) : (
+        <></>
+      )}
+      {repostModalOpen ? (
+        <RepostModal
+          closeModal={() => setRepostModalOpen(false)}
+          confirmDelete={() => handleRepost()}
+          repostDisable={repostDisable}
         />
       ) : (
         <></>
@@ -320,7 +344,8 @@ export default function PostCard({
 
           <Reposts
             onClick={() => {
-              alert("aaaaaaa");
+              setRepostModalOpen(true);
+              setSelectedPost(postId);
             }}
           >
             <BiRepost />
@@ -343,7 +368,7 @@ export default function PostCard({
                   />
                   <HiTrash
                     onClick={() => {
-                      setModalOpen(true);
+                      setdelModalOpen(true);
                       setSelectedPost(postId);
                     }}
                   />
@@ -473,7 +498,7 @@ const CommentBox = styled.div`
   display: flex;
   flex-direction: column;
   width: 611px;
-  background: red;
+  background: #1e1e1e;
   border-radius: 16px;
   margin: -50px 0px 24px 0px;
   padding: 50px 0px 24px 24px;
