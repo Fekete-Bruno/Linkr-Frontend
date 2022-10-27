@@ -87,6 +87,12 @@ function unfollowUser(id) {
   return request;
 }
 
+function getFollows() {
+  const config = createHeaders();
+  const request = axios.get(`${BASE_URL}/follows`,config);
+  return request;
+}
+
 function getHashtags() {
   const config = createHeaders();
   const request = axios.get(`${BASE_URL}/hashtags`, config);
@@ -113,6 +119,7 @@ export {
   confirmFollow,
   followUser,
   unfollowUser,
+  getFollows,
   getHashtags,
   getPostsByHashtag
 };

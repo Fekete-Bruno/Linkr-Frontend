@@ -7,10 +7,11 @@ import PostContainer from "../components/PostsContainer/PostsContainer";
 import SearchBar from "../components/SearchBar/Search";
 import Trending from '../components/Trending/Trending';
 
-export default function Feed({ type, name, get, newPost, setNewPost }) {
+export default function Feed({ type, name, get, newPost, setNewPost, follows }) {
     
     const [posts, setPosts] = useState([]);
     const [updatePosts,setUpdatePosts] = useState([]);
+    console.log(follows)
 
     useEffect(() => {
         const promise = get(name);
@@ -68,7 +69,11 @@ export default function Feed({ type, name, get, newPost, setNewPost }) {
                     }
                     {
                         posts.length === 0 ? 
-                        <Message>No posts found from your friends 😞</Message> :
+                        <Message>
+                            {follows.length === 0 ? 
+                            "You don't follow anyone yet. Search for new friends! 😊": 
+                            "No posts found from your friends 😞"}
+                        </Message> :
                         <PostContainer posts={posts} newPost={newPost} setNewPost={setNewPost} />
                     }
                 </div>
@@ -111,6 +116,7 @@ const Message = styled.div`
   font-style: normal;
   font-size: 30px;
   font-weight: 500;
+  line-height: 35px;
   color: #ffffff;
   opacity: 0.9;
   
