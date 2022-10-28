@@ -20,6 +20,7 @@ export default function HashtagPage() {
             get={get}
             newPost = {newPost}
             setNewPost = {setNewPost}
+            follows={null}
         />
     );
 }

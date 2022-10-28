@@ -11,63 +11,63 @@ import { ThreeCircles } from "react-loader-spinner";
 import { getPostPage } from "./Service";
 
 export default function Feed({ type, name, get, newPost, setNewPost, follows }) {
-    
-    const [posts, setPosts] = useState([]);
-    const [updatePosts,setUpdatePosts] = useState([]);
-    const [page,setPage] = useState(2);
-    const [hasMore,setHasMore] = useState(true);
 
-    if(name!==""){
+    const [posts, setPosts] = useState([]);
+    const [updatePosts, setUpdatePosts] = useState([]);
+    const [page, setPage] = useState(2);
+    const [hasMore, setHasMore] = useState(true);
+
+    if (name !== "" && hasMore) {
         setHasMore(false);
     }
 
     useEffect(getStartPosts, [newPost, setPosts]);
 
-    function getStartPosts(){
+    function getStartPosts() {
         const promise = get(name);
         promise.then((res => {
             setPosts(res.data);
-        })).catch(()=>{
+        })).catch(() => {
             alert("An error occured while trying to fetch the posts, please refresh the page");
         });
     }
 
-    function addPages(){
-        if(hasMore){
-            getPostPage(page).then(res=>{    
+    function addPages() {
+        if (hasMore) {
+            getPostPage(page).then(res => {
                 setPosts(res.data);
-                setPage(page+1);
-                if(res.data.length===posts.length){
+                setPage(page + 1);
+                if (res.data.length === posts.length) {
                     setHasMore(false);
                 }
-            }).catch((error)=>{
+            }).catch((error) => {
                 console.error(error);
             });
         }
     }
 
-    function getNewPosts(){
+    function getNewPosts() {
         const promise = get(name);
         promise.then((res => {
             let oldPostsIds = posts.map(post => post.postId);
-            setUpdatePosts(res.data.filter((post)=>{
+            setUpdatePosts(res.data.filter((post) => {
                 return !oldPostsIds.includes(post.postId)
-              }));
-        })).catch((error)=>{
+            }));
+        })).catch((error) => {
             console.error(error);
         });
     }
 
-    function addNewPosts(){
+    function addNewPosts() {
         console.log('Add new posts...');
-        const temp = [...updatePosts,...posts];
+        const temp = [...updatePosts, ...posts];
         setUpdatePosts([]);
         setPosts([...temp]);
     }
 
     const UPDATE_TIMER = 15000;
-    useInterval(getNewPosts,UPDATE_TIMER);
-    
+    useInterval(getNewPosts, UPDATE_TIMER);
+
     return (
         <Page>
 
@@ -82,29 +82,32 @@ export default function Feed({ type, name, get, newPost, setNewPost, follows }) 
             <Content>
 
                 <div>
-                    {type === "hashtag" ? 
+                    {type === "hashtag" ?
                         ""
                         :
                         <PostForm newPost={newPost} setNewPost={setNewPost} />
                     }
                     {
-                        updatePosts.length===0 ? "" :
-                        <UpdatePostsButton onClick={addNewPosts}>{updatePosts.length} new posts, load more! <Refresh /></UpdatePostsButton>
+                        updatePosts.length === 0 ? "" :
+                            <UpdatePostsButton onClick={addNewPosts}>{updatePosts.length} new posts, load more! <Refresh /></UpdatePostsButton>
                     }
                     {
-                        posts.length === 0 ? 
-                        <Message>
-                            {follows.length === 0 ? 
-                            "You don't follow anyone yet. Search for new friends! 😊": 
-                            "No posts found from your friends 😞"}
-                        </Message> :
-                        <InfiniteScroll
-                            loadMore={addPages}
-                            loader={hasMore?<Loader><ThreeCircles color="white"/></Loader>:""}
-                            hasMore={hasMore}
-                        >
+                        follows === null ?
                             <PostContainer posts={posts} newPost={newPost} setNewPost={setNewPost} />
-                        </InfiniteScroll>
+                            :
+                            posts.length === 0 ?
+                                <Message>
+                                    {follows.length === 0 ?
+                                        "You don't follow anyone yet. Search for new friends! 😊" :
+                                        "No posts found from your friends 😞"}
+                                </Message> :
+                                <InfiniteScroll
+                                    loadMore={addPages}
+                                    loader={hasMore ? <Loader><ThreeCircles color="white" /></Loader> : ""}
+                                    hasMore={hasMore}
+                                >
+                                    <PostContainer posts={posts} newPost={newPost} setNewPost={setNewPost} />
+                                </InfiniteScroll>
                     }
                 </div>
 
