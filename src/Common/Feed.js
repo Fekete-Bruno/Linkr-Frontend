@@ -17,9 +17,11 @@ export default function Feed({ type, name, get, newPost, setNewPost, follows }) 
     const [page,setPage] = useState(2);
     const [hasMore,setHasMore] = useState(true);
 
-    if(name!==""){
-        setHasMore(false);
-    }
+    useEffect(()=>{
+        if(type==="hashtag"){
+            setHasMore(false);
+        }
+    },[setHasMore]);
 
     useEffect(getStartPosts, [newPost, setPosts]);
 
