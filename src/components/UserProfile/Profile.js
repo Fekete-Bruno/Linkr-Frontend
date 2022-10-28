@@ -12,10 +12,9 @@ export default function UserProfile() {
   const params = useParams();
   const navigate = useNavigate();
   const userId = localStorage.getItem("linkr-userId");
-
   const [user, setUser] = useState([]);
   const [posts, setPosts] = useState([]);
-  const [newPost,setNewPost] = useState(false);
+  const [newPost, setNewPost] = useState(false);
 
   useEffect(() => {
     const promise = getUserInfos(params.id);
@@ -26,55 +25,49 @@ export default function UserProfile() {
       const promise = getUserPosts(params.id);
       promise.then((res) => {
         setPosts(res.data);
-      })
-
+      });
     });
 
     promise.catch(() => {
       navigate("/404");
     });
+  }, [params.id, newPost, setPosts]);
 
-  }, [params.id, newPost, setPosts]);  
-
-  console.log( userId, user)
-  return ( 
+  console.log(userId, user);
+  return (
     <>
       {user.length === 0 ? (
-
-          <Loader>
-            <ThreeCircles color="white" />
-          </Loader>
-
+        <Loader>
+          <ThreeCircles color="white" />
+        </Loader>
       ) : (
-
         <Page>
-
           <LeftSection>
             <UserInfos>
-              {
-              user.img === null ?
-                <ContainerHiCircle /> :
+              {user.img === null ? (
+                <ContainerHiCircle />
+              ) : (
                 <ProfilePicture img={user.img} />
-              }
+              )}
 
               <Title>{user.name}'s posts</Title>
             </UserInfos>
 
-            { user.id == userId ? <></> : <div className="hidden"><Follow/></div>}
+            {user.id === userId ? (
+              <></>
+            ) : (
+              <div className="hidden">
+                <Follow />
+              </div>
+            )}
 
-            <Posts
-              newPost={newPost}
-              setNewPost={setNewPost}
-              posts={posts}
-            />
+            <Posts newPost={newPost} setNewPost={setNewPost} posts={posts} />
           </LeftSection>
 
           <RightSection>
-
-            { user.id == userId ? <BlankSpace/> : <Follow/>}
+            {user.id === userId ? <BlankSpace /> : <Follow />}
 
             <Trending />
-
           </RightSection>
         </Page>
       )}
@@ -91,15 +84,15 @@ const Loader = styled.div`
 `;
 
 const Page = styled.div`
-    max-width: 100vw;
-    margin:15vh 15vw;
-    display: flex;
-    justify-content: center;
-    color: white;
+  max-width: 100vw;
+  margin: 15vh 15vw;
+  display: flex;
+  justify-content: center;
+  color: white;
 
-    @media (max-width: 800px) {
-        margin: 12vh 0;
-    }
+  @media (max-width: 800px) {
+    margin: 12vh 0;
+  }
 `;
 
 const LeftSection = styled.div`
@@ -107,7 +100,7 @@ const LeftSection = styled.div`
   flex-direction: column;
   align-items: center;
 
-  .hidden {   
+  .hidden {
     width: 80vw;
     align-self: flex-start;
     margin: 3vh 2vw;
@@ -130,7 +123,6 @@ const UserInfos = styled.div`
     width: 98vw;
     padding: 5vh 2vw;
   }
-
 `;
 
 const ProfilePicture = styled.div`
@@ -175,4 +167,4 @@ const RightSection = styled.div`
 
 const BlankSpace = styled.div`
   height: 130px;
-`
+`;
