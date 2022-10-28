@@ -1,9 +1,7 @@
 import styled from "styled-components";
-
 import PostCard from "../PostCard/PostCard";
 
 export default function Posts({ posts, newPost, setNewPost }) {
-
   return (
     <>
       {posts.length === 0 ? (
@@ -11,19 +9,20 @@ export default function Posts({ posts, newPost, setNewPost }) {
       ) : (
         <>
           {posts.map((post) => (
-            <PostCard 
-            key={post.postId}
-            likeArray={post.likeArray}  
-            likes={post.likes}
-            postId={post.postId}
-            img={post.img}
-            postUserId={post.userId}
-            name={post.name}
-            description={post.description}
-            newPost={newPost} 
-            url={post.url}
-            setNewPost={setNewPost}
-          />
+            <PostCard
+              key={post.postId}
+              likeArray={post.likeArray}
+              likes={post.likes}
+              postId={post.postId}
+              img={post.ownerImg}
+              postUserId={post.userId}
+              name={post.ownerName}
+              description={post.description}
+              newPost={newPost}
+              url={post.url}
+              setNewPost={setNewPost}
+              reposts={post.reposts}
+            />
           ))}
         </>
       )}
@@ -40,7 +39,7 @@ const Message = styled.div`
   font-weight: 500;
   color: #ffffff;
   opacity: 0.9;
-  
+
   @media (max-width: 600px) {
     width: 98vw;
     padding: 2vw;
