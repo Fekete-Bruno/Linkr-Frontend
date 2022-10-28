@@ -116,6 +116,13 @@ const PostFormContainer = styled.div`
       margin: 0.5vh;
     }
   }
+
+  @media (max-width: 600px) {
+    width: 100vw;
+    form{
+      width: 100%;
+    }
+  }
 `;
 
 const Wrapper = styled.div`
