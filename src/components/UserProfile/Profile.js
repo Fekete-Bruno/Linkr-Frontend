@@ -24,6 +24,7 @@ export default function UserProfile() {
 
       const promise = getUserPosts(params.id);
       promise.then((res) => {
+        console.log(res.data);
         setPosts(res.data);
       });
     });
