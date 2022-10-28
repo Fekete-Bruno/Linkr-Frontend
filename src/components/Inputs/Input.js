@@ -60,5 +60,8 @@ const Wrapper = styled.input`
       font-size: 15px;
       color: #949494;
     }
+    @media (max-width: 600px) {
+    width: 100%;
+    }
   }
 `;
