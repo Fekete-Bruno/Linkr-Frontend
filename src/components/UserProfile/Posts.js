@@ -15,7 +15,8 @@ export default function Posts({ posts, newPost, setNewPost }) {
               likes={post.likes}
               postId={post.postId}
               img={post.ownerImg}
-              postUserId={post.userId}
+              postUserId={post.ownerId}
+              reposterName={post.reposterName}
               name={post.ownerName}
               description={post.description}
               newPost={newPost}

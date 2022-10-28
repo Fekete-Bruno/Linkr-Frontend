@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { BiRepost } from "react-icons/bi";
 
 const PostBox = styled.div`
   width: 611px;
@@ -112,4 +113,37 @@ const PostBox = styled.div`
   }
 `;
 
-export default PostBox;
+const RepostBox = styled.div`
+  display: flex;
+  width: 611px;
+  height: 269px;
+  left: 241px;
+  top: 479px;
+  background: #1E1E1E;
+  border-radius: 16px;
+  margin-bottom: -235px;
+
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  color: #FFFFFF;
+  padding: 15px 8px 8px 12px;
+  
+  h1 {
+    margin-left: 8px;
+  }
+
+  @media (max-width: 600px) {
+    width: 100vw;
+    border-radius: 0;
+  }
+`;
+
+const RepostsSymbol = styled(BiRepost)`
+  transform: scale(2);
+  cursor: pointer;
+`;
+
+export { PostBox, RepostBox, RepostsSymbol };
