@@ -34,7 +34,8 @@ export default function UserProfile() {
     });
   }, [params.id, newPost, setPosts]);
 
-  console.log(userId, user);
+  //console.log(userId, user);
+  console.log(posts);
   return (
     <>
       {user.length === 0 ? (

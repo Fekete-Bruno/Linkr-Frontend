@@ -1,4 +1,4 @@
-import PostBox from "../../Styles/PostBox";
+import { PostBox, RepostBox, RepostsSymbol } from "../../Styles/PostBox";
 import ProfilePicture from "../../Styles/ProfilePicture";
 import {
   HeartDisliked,
@@ -123,6 +123,7 @@ export default function PostCard({
   reposts,
   newPost,
   setNewPost,
+  reposterName
 }) {
   const navigate = useNavigate();
   const [delModalOpen, setdelModalOpen] = useState(false);
@@ -152,10 +153,10 @@ export default function PostCard({
       } else if (noUser.length > 1) {
         setLikeMessage(
           "You ," +
-            noUser[0].name +
-            " and other " +
-            Number(likes - 2) +
-            " users"
+          noUser[0].name +
+          " and other " +
+          Number(likes - 2) +
+          " users"
         );
       }
     } else {
@@ -168,11 +169,11 @@ export default function PostCard({
       } else if (noUser.length > 2) {
         setLikeMessage(
           noUser[0].name +
-            ", " +
-            noUser[1].name +
-            " and other " +
-            Number(likes - 2) +
-            " users"
+          ", " +
+          noUser[1].name +
+          " and other " +
+          Number(likes - 2) +
+          " users"
         );
       }
     }
@@ -306,6 +307,14 @@ export default function PostCard({
       ) : (
         <></>
       )}
+
+      {reposterName === null || reposterName === undefined ? <></> : <RepostBox>
+        <RepostsSymbol />
+        <h1>Re-posted by {reposterName}</h1>
+      </RepostBox>}
+
+
+
       <PostBox>
         <div className="left">
           {img === null ? (
