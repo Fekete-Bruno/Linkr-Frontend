@@ -39,6 +39,7 @@ export default function EditDescriptionInput({
         setSelectedPost();
         setInputLock(false);
         setNewPost(!newPost);
+        window.location.reload(false);
       })
       .catch((error) => alert(`Couldn't edit post. Error: ${error.message}`));
   }

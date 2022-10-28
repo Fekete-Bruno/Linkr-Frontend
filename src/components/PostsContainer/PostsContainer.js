@@ -2,7 +2,12 @@ import { ThreeCircles } from "react-loader-spinner";
 import styled from "styled-components";
 import PostCard from "../PostCard/PostCard";
 
-export default function PostContainer({ posts, newPost, setNewPost }) {
+export default function PostContainer({
+  posts,
+  newPost,
+  setNewPost,
+  loggedName,
+}) {
   return (
     <>
       <Wrapper>
@@ -16,14 +21,16 @@ export default function PostContainer({ posts, newPost, setNewPost }) {
                 likeArray={post.likeArray}
                 likes={post.likes}
                 postId={post.postId}
-                img={post.img}
-                postUserId={post.userId}
-                name={post.name}
+                img={post.ownerImg}
+                postUserId={post.ownerId}
+                reposterName={post.reposterName}
+                name={post.ownerName}
                 description={post.description}
                 newPost={newPost}
                 url={post.url}
                 setNewPost={setNewPost}
                 reposts={post.reposts}
+                loggedName={loggedName}
               />
             );
           })

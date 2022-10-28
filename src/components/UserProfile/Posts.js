@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import PostCard from "../PostCard/PostCard";
 
-export default function Posts({ posts, newPost, setNewPost }) {
+export default function Posts({ posts, newPost, setNewPost, loggedName }) {
   return (
     <>
       {posts.length === 0 ? (
@@ -23,6 +23,7 @@ export default function Posts({ posts, newPost, setNewPost }) {
               url={post.url}
               setNewPost={setNewPost}
               reposts={post.reposts}
+              loggedName={loggedName}
             />
           ))}
         </>

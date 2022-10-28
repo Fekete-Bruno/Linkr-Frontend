@@ -63,7 +63,12 @@ export default function UserProfile() {
               </div>
             )}
 
-            <Posts newPost={newPost} setNewPost={setNewPost} posts={posts} />
+            <Posts
+              newPost={newPost}
+              setNewPost={setNewPost}
+              posts={posts}
+              loggedName={user.name}
+            />
           </LeftSection>
 
           <RightSection>
