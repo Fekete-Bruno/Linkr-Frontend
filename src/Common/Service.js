@@ -51,9 +51,9 @@ function getPosts() {
   return request;
 }
 
-function getPostPage(page){
+function getPostPage(page) {
   const config = createHeaders();
-  const request = axios.get(`${BASE_URL}/timeline/${page}`,config);
+  const request = axios.get(`${BASE_URL}/timeline/${page}`, config);
   return request;
 }
 
@@ -95,7 +95,7 @@ function unfollowUser(id) {
 
 function getFollows() {
   const config = createHeaders();
-  const request = axios.get(`${BASE_URL}/follows`,config);
+  const request = axios.get(`${BASE_URL}/follows`, config);
   return request;
 }
 
@@ -111,9 +111,9 @@ function getPostsByHashtag(hashtag) {
   return request;
 }
 
-function repostPost(id) {
+function repostPost(id, body) {
   const config = createHeaders();
-  const request = axios.delete(`${BASE_URL}/repost/${id}`, config);
+  const request = axios.post(`${BASE_URL}/repost/${id}`, body, config);
   return request;
 }
 

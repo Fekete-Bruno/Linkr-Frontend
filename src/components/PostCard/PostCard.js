@@ -123,7 +123,8 @@ export default function PostCard({
   reposts,
   newPost,
   setNewPost,
-  reposterName
+  reposterName,
+  loggedName,
 }) {
   const navigate = useNavigate();
   const [delModalOpen, setdelModalOpen] = useState(false);
@@ -153,10 +154,10 @@ export default function PostCard({
       } else if (noUser.length > 1) {
         setLikeMessage(
           "You ," +
-          noUser[0].name +
-          " and other " +
-          Number(likes - 2) +
-          " users"
+            noUser[0].name +
+            " and other " +
+            Number(likes - 2) +
+            " users"
         );
       }
     } else {
@@ -169,11 +170,11 @@ export default function PostCard({
       } else if (noUser.length > 2) {
         setLikeMessage(
           noUser[0].name +
-          ", " +
-          noUser[1].name +
-          " and other " +
-          Number(likes - 2) +
-          " users"
+            ", " +
+            noUser[1].name +
+            " and other " +
+            Number(likes - 2) +
+            " users"
         );
       }
     }
@@ -193,14 +194,16 @@ export default function PostCard({
 
   function handleRepost() {
     setRepostDisable(true);
-    repostPost(userId, selectedPost)
+    repostPost(selectedPost)
       .then(() => {
+        console.log("caiu aqui");
         setRepostModalOpen(false);
         setRepostDisable(false);
         setSelectedPost();
         window.location.reload(false);
       })
       .catch((error) => alert(`Couldn't repost. Error: ${error.message}`));
+    setRepostModalOpen(false);
   }
 
   function handleLike() {
@@ -243,7 +246,6 @@ export default function PostCard({
       setCommentsNumber(answer.data.length);
       //console.log(body);
       //console.log(answer.data);
-
     });
 
     getComments.catch((error) => {
@@ -301,19 +303,23 @@ export default function PostCard({
       {repostModalOpen ? (
         <RepostModal
           closeModal={() => setRepostModalOpen(false)}
-          confirmDelete={() => handleRepost()}
+          confirmRepost={() => handleRepost()}
           repostDisable={repostDisable}
         />
       ) : (
         <></>
       )}
-
-      {reposterName === null || reposterName === undefined ? <></> : <RepostBox>
-        <RepostsSymbol />
-        <h1>Re-posted by {reposterName}</h1>
-      </RepostBox>}
-
-
+      {reposterName === null || reposterName === undefined ? (
+        <></>
+      ) : (
+        <RepostBox>
+          <RepostsSymbol />
+          <h1>
+            Re-posted by{" "}
+            {reposterName === loggedName ? <>you</> : <>{reposterName}</>}
+          </h1>
+        </RepostBox>
+      )}
 
       <PostBox>
         <div className="left">

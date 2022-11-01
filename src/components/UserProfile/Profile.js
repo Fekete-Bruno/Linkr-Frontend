@@ -24,6 +24,7 @@ export default function UserProfile() {
 
       const promise = getUserPosts(params.id);
       promise.then((res) => {
+        console.log(res.data);
         setPosts(res.data);
       });
     });
@@ -62,7 +63,12 @@ export default function UserProfile() {
               </div>
             )}
 
-            <Posts newPost={newPost} setNewPost={setNewPost} posts={posts} />
+            <Posts
+              newPost={newPost}
+              setNewPost={setNewPost}
+              posts={posts}
+              loggedName={user.name}
+            />
           </LeftSection>
 
           <RightSection>
